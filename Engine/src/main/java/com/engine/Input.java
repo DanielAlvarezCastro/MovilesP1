@@ -6,14 +6,21 @@ import java.util.List;
  * Interfaz input
  */
 public interface Input{
+	/**
+	 * Devuelve la lista de eventos recibidos desde
+	 * la última invocación al método
+	 */
+	List<TouchEvent> getTouchEvents();
 
-	//Clase que representa la información de un toque sobre la pantalla
-	//Su tipo, su posición y su identificador
-    public class TouchEvent{
-		
+	enum EventType {
+
 	}
-	
-	
-	public List<TouchEvent> getTouchEvents();
+	//La clase no guarda nada de la plataforma
+	class TouchEvent {
+		public EventType _event;
+		public int x;
+		public int y;
+		public int fingerId;
+	}//class TouchEvent
 
-}
+} //interface Input
