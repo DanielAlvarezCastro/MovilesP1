@@ -15,6 +15,7 @@ public class Game implements com.engine.Game, Runnable {
         _surfaceView = surfaceView;
         _graphics = new Graphics(surfaceView, assetManager);
         _holder = surfaceView.getHolder();
+        _input = new Input();
 
     }
 

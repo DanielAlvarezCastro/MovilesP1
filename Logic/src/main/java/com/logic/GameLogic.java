@@ -3,6 +3,7 @@ package com.logic;
 import com.engine.Game;
 import com.engine.GameState;
 import com.engine.Graphics;
+import com.engine.Input;
 import com.engine.Rect;
 import com.engine.Sprite;
 
@@ -33,14 +34,22 @@ public class GameLogic implements GameState {
                 0 , 0);
 
         gameObjects.add(flechas);
+
     }
 
     @Override
     public void update(double deltaTime) {
-        double incr = 430*deltaTime;
+        double incr = ballVel*deltaTime;
         int posY = test.getY();
         int newPosY = (int)(posY+incr);
         test.setY(newPosY);
+
+        List<Input.TouchEvent> events = _game.getInput().getTouchEvents();
+        for (Input.TouchEvent event : events) {
+            if(event.type == Input.EventType.pulsado){
+                ballVel*=-1;
+            }
+        }
     }
 
     @Override
@@ -55,6 +64,7 @@ public class GameLogic implements GameState {
     }
     int _gameWidth = 1080;
     int _gameHeight = 1920;
+    int ballVel = 450;
     GameObject test;
     GameObject flechas;
     List<GameObject> gameObjects;

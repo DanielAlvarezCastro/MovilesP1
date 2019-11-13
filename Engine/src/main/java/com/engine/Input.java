@@ -13,11 +13,13 @@ public interface Input{
 	List<TouchEvent> getTouchEvents();
 
 	enum EventType {
-
+		pulsado,
+		soltado
 	}
+
 	//La clase no guarda nada de la plataforma
 	class TouchEvent {
-		public EventType _event;
+		public EventType type;
 		public int x;
 		public int y;
 		public int fingerId;
