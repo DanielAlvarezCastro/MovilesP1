@@ -13,8 +13,10 @@ public interface Input{
 	List<TouchEvent> getTouchEvents();
 
 	enum EventType {
-		pulsado,
-		soltado
+		pressed,
+		released,
+        clicked,
+        drag
 	}
 
 	//La clase no guarda nada de la plataforma

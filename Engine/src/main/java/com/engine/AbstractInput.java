@@ -1,4 +1,5 @@
 package com.engine;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractInput implements Input {
@@ -8,7 +9,9 @@ public abstract class AbstractInput implements Input {
         //Crear una lista nueva con el contenido de _list;
         //Vaciar _list.
         //Devolver la copia
-        return _list;
+        List<TouchEvent> auxList = new ArrayList<>(_list);
+        _list.clear();
+        return auxList;
     }
 
     synchronized protected void addEvent (TouchEvent e) {
@@ -21,5 +24,5 @@ public abstract class AbstractInput implements Input {
         }
     }
 
-    protected List<TouchEvent> _list;
+    protected List<TouchEvent> _list = new ArrayList<>();
 }

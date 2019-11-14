@@ -4,25 +4,23 @@ import android.view.View;
 
 import java.util.List;
 
-import static android.view.MotionEvent.ACTION_BUTTON_PRESS;
-import static android.view.MotionEvent.ACTION_BUTTON_RELEASE;
+import static android.view.MotionEvent.ACTION_DOWN;
+import static android.view.MotionEvent.ACTION_UP;
 
 public class Input extends com.engine.AbstractInput implements View.OnTouchListener {
 
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 
-
 		TouchEvent e = new TouchEvent();
 
 		switch ( event.getAction()){
-			case ACTION_BUTTON_PRESS:
-				System.out.println("press");
-				e.type = EventType.pulsado;
+			case ACTION_DOWN:
+
+				e.type = EventType.clicked;
 				break;
-			case ACTION_BUTTON_RELEASE:
-				System.out.println("release");
-				e.type = EventType.soltado;
+			case ACTION_UP:
+				e.type = EventType.released;
 				break;
 		}
 		e.fingerId = event.getPointerCount();

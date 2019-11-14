@@ -46,7 +46,7 @@ public class GameLogic implements GameState {
 
         List<Input.TouchEvent> events = _game.getInput().getTouchEvents();
         for (Input.TouchEvent event : events) {
-            if(event.type == Input.EventType.pulsado){
+            if(event.type == Input.EventType.clicked){
                 ballVel*=-1;
             }
         }
@@ -62,11 +62,13 @@ public class GameLogic implements GameState {
         }
 
     }
+
+    public int GetGameWidth(){ return _gameWidth;}
+    public int GetGameHeight(){ return _gameHeight;}
     int _gameWidth = 1080;
     int _gameHeight = 1920;
     int ballVel = 450;
     GameObject test;
-    GameObject flechas;
     List<GameObject> gameObjects;
     Game _game;
 }
