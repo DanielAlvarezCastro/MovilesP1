@@ -6,6 +6,7 @@ import android.view.SurfaceView;
 
 import com.engine.androidengine.Game;
 import com.logic.GameLogic;
+import com.logic.MenuState;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         SurfaceView surfaceView = new SurfaceView(this);
         setContentView(surfaceView);
         _androidGame = new Game(getAssets(), surfaceView);
-        GameLogic gameLogic = new GameLogic(_androidGame);
+        MenuState gameLogic = new MenuState(_androidGame);
         _androidGame.setGameState(gameLogic);
 
     }

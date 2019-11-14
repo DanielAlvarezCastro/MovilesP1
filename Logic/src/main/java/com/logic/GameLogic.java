@@ -31,7 +31,7 @@ public class GameLogic implements GameState {
         gameObjects.add(test);
 
         GameObject flechas = new GameObject("background",new Sprite(graphics.newImage("Sprites/arrowsBackground.png")),
-                0 , 0);
+                screenWidth/6 , 0, (screenWidth/3)*2, screenHeight);
 
         gameObjects.add(flechas);
 
@@ -62,6 +62,8 @@ public class GameLogic implements GameState {
         }
 
     }
+
+
 
     public int GetGameWidth(){ return _gameWidth;}
     public int GetGameHeight(){ return _gameHeight;}

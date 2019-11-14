@@ -1,5 +1,7 @@
 package com.engine;
 
+import java.util.Stack;
+
 /**
  * Interfaz game
  */
@@ -11,6 +13,7 @@ public interface Game{
     public Graphics getGraphics();
 
 	public Input getInput();
+
 	
 	//TODO ampliar Game para incorporar el estado de la aplicación
 }

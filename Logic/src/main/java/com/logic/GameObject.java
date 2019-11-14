@@ -10,6 +10,7 @@ public class GameObject {
         _name=name;
         _sprite=sprite;
         _dest = new Rect(x, y, w, h);
+        _active = true;
     }
 
     public GameObject(String name, Sprite sprite, int x, int y){
@@ -20,7 +21,7 @@ public class GameObject {
 
     public void draw(Graphics g){
 
-        _sprite.draw(g, _dest);
+        if(_active) _sprite.draw(g, _dest);
     }
     public int getX(){
         return  _dest.x;
@@ -40,6 +41,7 @@ public class GameObject {
     public void setH(int h){
         _dest.h = h;
     }
+    private  Boolean _active;
     private String _name;
     private Rect _dest;
     private Sprite _sprite;

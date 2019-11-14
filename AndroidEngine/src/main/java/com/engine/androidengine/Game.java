@@ -67,6 +67,7 @@ public class Game implements com.engine.Game, Runnable {
             //Evitar que se llame el método directamente
             throw new RuntimeException("run() should not be called directly");
         }
+        while(_graphics.getWidth()==0){}
 
         runGame();
     }
