@@ -30,9 +30,9 @@ public class MenuState implements GameState {
                 new Rect(32*_rndColor,0,32,32)),screenWidth/6 , 0, (screenWidth/3)*2, screenHeight);
         gameObjects.add(backgroundOb);
 
-        _flechas1 = new GameObject("background",new Sprite(graphics.newImage("Sprites/arrowsBackground.png")),
+        _flechas1 = new GameObject("arrows1",new Sprite(graphics.newImage("Sprites/arrowsBackground.png"),100),
                 screenWidth/6 , 0, (screenWidth/3)*2, screenHeight*2);
-        _flechas2 = new GameObject("background",new Sprite(graphics.newImage("Sprites/arrowsBackground.png")),
+        _flechas2 = new GameObject("arrows2",new Sprite(graphics.newImage("Sprites/arrowsBackground.png"),100),
                 screenWidth/6 , -screenHeight*2, (screenWidth/3)*2, screenHeight*2);
 
         gameObjects.add(_flechas1);

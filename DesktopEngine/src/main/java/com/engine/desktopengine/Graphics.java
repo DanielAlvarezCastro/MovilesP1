@@ -40,8 +40,16 @@ public class Graphics extends com.engine.AbstractGraphics{
     }
 
     @Override
-    protected void drawImagePrivate(Image image, Rect source, Rect dest) {
-        _graphics.drawImage(((com.engine.desktopengine.Image)image).getAwtImage(), dest.x, dest.y, dest.x+dest.w, dest.y+dest.h, source.x,source.y, source.x + source.w,source.y + source.h, null);
+    protected void drawImagePrivate(Image image, Rect source, Rect dest, int alpha) {
+
+        if(alpha!=255){
+            float newAlpha = alpha/255.0f;
+            Graphics2D g2d = (Graphics2D) _graphics.create();
+            g2d.setComposite(AlphaComposite.SrcOver.derive(newAlpha));
+            g2d.drawImage(((com.engine.desktopengine.Image)image).getAwtImage(), dest.x, dest.y, dest.x+dest.w, dest.y+dest.h, source.x,source.y, source.x + source.w,source.y + source.h, null);
+            g2d.dispose();
+        }
+        else _graphics.drawImage(((com.engine.desktopengine.Image)image).getAwtImage(), dest.x, dest.y, dest.x+dest.w, dest.y+dest.h, source.x,source.y, source.x + source.w,source.y + source.h, null);
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.view.Surface;
 import android.view.SurfaceView;
 import java.io.IOException;
@@ -35,11 +36,21 @@ public class Graphics extends com.engine.AbstractGraphics{
     }
 
     @Override
-    protected void drawImagePrivate(com.engine.Image image, Rect source, Rect dest) {
+    protected void drawImagePrivate(com.engine.Image image, Rect source, Rect dest, int alpha) {
+
         android.graphics.Rect src = new android.graphics.Rect(source.x, source.y, source.x + source.w, source.y+source.h);
 
         android.graphics.Rect dst = new android.graphics.Rect(dest.x, dest.y, dest.x + dest.w, dest.y+dest.h);
-        _canvas.drawBitmap(((com.engine.androidengine.Image)image).getBitmapImage(), src, dst, null );
+
+        //Solo intenta pintar con alpha si el valor es menor que el máximo
+        if(alpha!=255) {
+            Paint paint = new Paint();
+            paint.setAlpha(alpha);
+            _canvas.drawBitmap(((com.engine.androidengine.Image)image).getBitmapImage(), src, dst, paint );
+        }
+        else {
+            _canvas.drawBitmap(((com.engine.androidengine.Image)image).getBitmapImage(), src, dst, null );
+        }
 
     }
 

@@ -30,10 +30,10 @@ public class GameLogic implements GameState {
 
         gameObjects.add(test);
 
-        GameObject flechas = new GameObject("background",new Sprite(graphics.newImage("Sprites/arrowsBackground.png")),
-                screenWidth/6 , 0, (screenWidth/3)*2, screenHeight);
+        //GameObject flechas = new GameObject("arrowsBackground",new Sprite(graphics.newImage("Sprites/arrowsBackground.png"), 0),
+         //       screenWidth/6 , 0, (screenWidth/3)*2, screenHeight);
 
-        gameObjects.add(flechas);
+        //gameObjects.add(flechas);
 
     }
 

@@ -22,23 +22,23 @@ public abstract class AbstractGraphics implements Graphics {
         //Pasar de cóordenadas juego a coordenadas de pantalla y dibujar
         Rect source = new Rect(0, 0, image.getWidth(), image.getHeight());
         Rect dest = new Rect(x, y, image.getWidth(), image.getHeight());
-        drawImagePrivate(image, source, dest);
+        drawImagePrivate(image, source, dest, 255);
     }
     public void drawImage(Image image, Rect source, int x, int y){
         //Pasar de cóordenadas lógicas a coordenadas de pantalla y dibujar
         Rect dest = new Rect(x, y, image.getWidth(), image.getHeight());
-        drawImagePrivate(image, source, dest);
+        drawImagePrivate(image, source, dest, 255);
     }
 
     public void drawImage(Image image, Rect source, Rect dest){
         //Pasar de cóordenadas lógicas a coordenadas de pantalla y dibujar
-        drawImagePrivate(image, source, dest);
+        drawImagePrivate(image, source, dest, 255);
     }
     public void drawImage(Image image, Rect source, Rect dest, int alpha){
         //Pasar de cóordenadas lógicas a coordenadas de pantalla y dibujar
-        drawImagePrivate(image, source, dest);
+        drawImagePrivate(image, source, dest, alpha);
     }
 
-    protected abstract void drawImagePrivate(Image image, Rect source, Rect dest);
+    protected abstract void drawImagePrivate(Image image, Rect source, Rect dest, int alpha);
 
 }
