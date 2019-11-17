@@ -36,17 +36,21 @@ public abstract class AbstractGraphics implements Graphics {
     }
     public void drawImage(Image image, Rect source, Rect dest, int alpha){
 
+        //ratio entre las anchuras
+        float ratioW = (float)getWidth()/ (float)_gameWidth;
+        //ratio entre las alturas
+        float ratioH = (float)getHeight()/ (float)_gameHeight;
+
         //Escogemos el ratio menor entre la anchura y altura para usar siempre el mismo valor y
         //que los sprites no se deformen
-        float ratio = Math.min((float)getWidth()/ (float)_gameWidth, (float)getHeight()/ (float)_gameHeight);
-        //System.out.println("Screen width " + getWidth());
-        //System.out.println("Game width " + _gameWidth);
-        //System.out.println(ratio);
+        float ratio = Math.min(ratioW, ratioH);
+
+        //Obtenemos el offset restando la medida que sale con el ratio menor con la que sale con el ratio de su dimensión
+        float xOffset =  (Math.abs(_gameWidth*ratio - _gameWidth*ratioW))/2.0f;
+        float yOffset = (Math.abs(_gameHeight*ratio - _gameHeight*ratioH))/2.0f;
+
         Rect screenRect = new Rect();
 
-        float xOffset = (Math.max(getWidth()-_gameWidth, 0))/2;
-        float yOffset = (Math.max(getHeight()-_gameHeight, 0))/2;
-        //System.out.println("xOffset " + xOffset);
         screenRect.x = (int)(dest.x * ratio + xOffset);
         screenRect.y = (int)(dest.y * ratio + yOffset);
         screenRect.w = (int)(dest.w * ratio);
