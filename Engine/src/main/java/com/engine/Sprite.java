@@ -34,6 +34,14 @@ public class Sprite{
         g.drawImage(_image, _source,x,y);
 
     }
+    //Devuelve alpha
+    public int getAlpha(){
+        return _alpha;
+    }
+    //Cambia alpha
+    public void setAlpha(int alpha){
+        _alpha = alpha;
+    }
 
     public void draw(Graphics g, Rect dest){
         g.drawImage(_image, _source, dest, _alpha);

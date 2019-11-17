@@ -12,10 +12,11 @@ import java.util.List;
 import java.util.Vector;
 import java.util.Random;
 
-public class MenuState implements GameState {
-    public MenuState(Game game){
+public class GameOverState implements GameState {
+    public GameOverState(Game game, int points){
         _game=game;
         gameObjects = new ArrayList<>();
+        _points = points;
     }
 
     @Override
@@ -34,8 +35,8 @@ public class MenuState implements GameState {
         _flechas2 = new GameObject("arrows2",new Sprite(graphics.newImage("Sprites/arrowsBackground.png"),100),
                 screenWidth/6 , -screenHeight*2, (screenWidth/3)*2, screenHeight*2);
 
-        GameObject logo = new GameObject("logo",new Sprite(graphics.newImage("Sprites/switchDashLogo.png"),255),
-                (screenWidth/2)-(508/4) , screenHeight/5, 508/2, 368/2);
+        GameObject gameOverSprite = new GameObject("gameOverSprite",new Sprite(graphics.newImage("Sprites/gameOver.png"),255),
+                (screenWidth/2)-(252/4) , screenHeight/5, 252/2, 208/2);
         GameObject muteButton = new GameObject("muteButton",new Sprite(graphics.newImage("Sprites/buttons.png"),
                 new Rect(140*2, 0, 140, 140), 255),
                 (screenWidth/12)-(140/4) , screenHeight/8, 140/2, 140/2);
@@ -43,11 +44,14 @@ public class MenuState implements GameState {
                 new Rect(0, 0, 140, 140), 255),
                 screenWidth-((screenWidth/12)+(140/4)) , screenHeight/8, 140/2, 140/2);
         tapSprite = new GameObject("tapSprite",new Sprite(graphics.newImage("Sprites/tapToPlay.png"),255),
-                (screenWidth/2)-(506/4) , screenHeight/2, 506/2, 72/2);
+                (screenWidth/2)-(532/4) , (screenHeight/3)*2, 532/2, 72/2);
+
+
+
         _tapAnimUp = false;
         gameObjects.add(_flechas1);
         gameObjects.add(_flechas2);
-        gameObjects.add(logo);
+        gameObjects.add(gameOverSprite);
         gameObjects.add(muteButton);
         gameObjects.add(helpButton);
         gameObjects.add(tapSprite);
@@ -111,6 +115,7 @@ public class MenuState implements GameState {
     int _gameWidth = 1080;
     int _gameHeight = 1920;
     int ballVel = 450;
+    int _points;
     double _fUpdateTimer=0;
     double _fixedUpdateDelay = 0.02;
     GameObject _flechas1;

@@ -23,6 +23,9 @@ public class GameObject {
 
         if(_active) _sprite.draw(g, _dest);
     }
+    public Sprite getSprite(){
+        return _sprite;
+    }
     public int getX(){
         return  _dest.x;
     }

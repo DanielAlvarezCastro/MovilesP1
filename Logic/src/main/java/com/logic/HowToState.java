@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Vector;
 import java.util.Random;
 
-public class MenuState implements GameState {
-    public MenuState(Game game){
+public class HowToState implements GameState {
+    public HowToState(Game game){
         _game=game;
         gameObjects = new ArrayList<>();
     }
@@ -34,22 +34,21 @@ public class MenuState implements GameState {
         _flechas2 = new GameObject("arrows2",new Sprite(graphics.newImage("Sprites/arrowsBackground.png"),100),
                 screenWidth/6 , -screenHeight*2, (screenWidth/3)*2, screenHeight*2);
 
-        GameObject logo = new GameObject("logo",new Sprite(graphics.newImage("Sprites/switchDashLogo.png"),255),
-                (screenWidth/2)-(508/4) , screenHeight/5, 508/2, 368/2);
-        GameObject muteButton = new GameObject("muteButton",new Sprite(graphics.newImage("Sprites/buttons.png"),
-                new Rect(140*2, 0, 140, 140), 255),
-                (screenWidth/12)-(140/4) , screenHeight/8, 140/2, 140/2);
-        GameObject helpButton = new GameObject("helpButton",new Sprite(graphics.newImage("Sprites/buttons.png"),
-                new Rect(0, 0, 140, 140), 255),
+        GameObject howToSprite = new GameObject("howToSprite",new Sprite(graphics.newImage("Sprites/howToPlay.png"),255),
+                (screenWidth/2)-(486/6) , screenHeight/6, 486/3, 354/3);
+        GameObject instructions = new GameObject("instructions",new Sprite(graphics.newImage("Sprites/instructions.png"),255),
+                (screenWidth/2)-(538/4) , screenHeight/3, 538/2, 551/2);
+        GameObject cancelButton = new GameObject("çancelButton",new Sprite(graphics.newImage("Sprites/buttons.png"),
+                new Rect(140, 0, 140, 140), 255),
                 screenWidth-((screenWidth/12)+(140/4)) , screenHeight/8, 140/2, 140/2);
         tapSprite = new GameObject("tapSprite",new Sprite(graphics.newImage("Sprites/tapToPlay.png"),255),
-                (screenWidth/2)-(506/4) , screenHeight/2, 506/2, 72/2);
+                (screenWidth/2)-(506/4) , (screenHeight/3)*2, 506/2, 72/2);
         _tapAnimUp = false;
         gameObjects.add(_flechas1);
         gameObjects.add(_flechas2);
-        gameObjects.add(logo);
-        gameObjects.add(muteButton);
-        gameObjects.add(helpButton);
+        gameObjects.add(howToSprite);
+        gameObjects.add(instructions);
+        gameObjects.add(cancelButton);
         gameObjects.add(tapSprite);
 
     }
