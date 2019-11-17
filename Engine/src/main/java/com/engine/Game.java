@@ -7,13 +7,13 @@ import java.util.Stack;
  */
  //Interfaz que aglutina todo lo normal, se encarga de las instancias de Input y Graphics
 public interface Game{
-	public void setGameState(GameState gameState);
-	public void runGame();
+	void setGameState(GameState gameState);
+	void runGame();
 
-    public Graphics getGraphics();
+    Graphics getGraphics();
 
-	public Input getInput();
+	Input getInput();
 
-	
-	//TODO ampliar Game para incorporar el estado de la aplicación
+	int getGameWidth();
+	int getGameHeight();
 }

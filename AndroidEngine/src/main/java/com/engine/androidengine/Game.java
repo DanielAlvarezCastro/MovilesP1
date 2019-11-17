@@ -13,7 +13,7 @@ public class Game implements com.engine.Game, Runnable {
 
     public Game(AssetManager assetManager, SurfaceView surfaceView){
         _surfaceView = surfaceView;
-        _graphics = new Graphics(surfaceView, assetManager);
+        _graphics = new Graphics(surfaceView, assetManager, _gameWidth, _gameHeight);
         _holder = surfaceView.getHolder();
         _input = new Input();
         _surfaceView.setOnTouchListener(_input);
@@ -58,6 +58,7 @@ public class Game implements com.engine.Game, Runnable {
 	public Input getInput(){
 		return _input;
 	}
+
 
 
     @Override
@@ -121,6 +122,17 @@ public class Game implements com.engine.Game, Runnable {
     } // pause
 
 
+    @Override
+    public int getGameWidth() {
+        return _gameWidth;
+    }
+
+    @Override
+    public int getGameHeight() {
+        return _gameHeight;
+    }
+
+
     Thread _renderThread;
     GameState _gameState;
     Graphics _graphics;
@@ -128,5 +140,12 @@ public class Game implements com.engine.Game, Runnable {
     SurfaceView _surfaceView;
     SurfaceHolder _holder;
     boolean _running;
+
+    //TODO : Pasarle estas constantes de otra forma
+    int screenWidth = 540;
+    int screenHeight = 960;
+
+    int _gameWidth = 1080;
+    int _gameHeight = 1920;
 
 }//class Game

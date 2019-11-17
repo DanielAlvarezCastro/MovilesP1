@@ -14,7 +14,7 @@ public class Game implements com.engine.Game{
         window.setSize(screenWidth,screenHeight);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        _graphics = new Graphics(window);
+        _graphics = new Graphics(window, _gameWidth, _gameHeight);
 
         window.createBufferStrategy(2);
         // Obtenemos el Buffer Strategy que se supone acaba de crearse.
@@ -73,10 +73,25 @@ public class Game implements com.engine.Game{
 		return _input;
 	}
 
-	GameState _gameState;
+    @Override
+    public int getGameWidth() {
+        return _gameWidth;
+    }
+
+    @Override
+    public int getGameHeight() {
+        return _gameHeight;
+    }
+
+    GameState _gameState;
     Graphics _graphics;
     Input _input;
     BufferStrategy _strategy;
+
+    //TODO : Pasarle estas constantes de otra forma
     int screenWidth = 540;
     int screenHeight = 960;
+
+    int _gameWidth = 1080;
+    int _gameHeight = 1920;
 }

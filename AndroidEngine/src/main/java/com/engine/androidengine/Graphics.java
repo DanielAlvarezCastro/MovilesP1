@@ -13,9 +13,11 @@ import java.io.InputStream;
 import com.engine.Rect;
 
 public class Graphics extends com.engine.AbstractGraphics{
-    public Graphics(SurfaceView surfaceView, AssetManager assetManager){
+    public Graphics(SurfaceView surfaceView, AssetManager assetManager, int gameWidth, int gameHeight){
         _surfaceView = surfaceView;
         _assetManager = assetManager;
+        _gameWidth=gameWidth;
+        _gameHeight = gameHeight;
 
     }
     @Override

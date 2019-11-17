@@ -65,10 +65,6 @@ public class GameLogic implements GameState {
 
 
 
-    public int GetGameWidth(){ return _gameWidth;}
-    public int GetGameHeight(){ return _gameHeight;}
-    int _gameWidth = 1080;
-    int _gameHeight = 1920;
     int ballVel = 450;
     GameObject test;
     List<GameObject> gameObjects;

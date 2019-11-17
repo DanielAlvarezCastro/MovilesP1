@@ -1,6 +1,7 @@
 package com.engine;
 
 public class Rect{
+    public Rect(){}
     public Rect(int x_, int y_, int w_, int h_){
         x=x_;
         y=y_;

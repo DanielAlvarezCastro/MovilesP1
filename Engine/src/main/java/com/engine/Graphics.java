@@ -2,9 +2,9 @@ package com.engine;
 
 
 public interface Graphics{
-    public Image newImage(String name);
-    public int getWidth();
-    public int getHeight();
+    Image newImage(String name);
+    int getWidth();
+    int getHeight();
     /**
      * Dibuja completamente la imagen image en la posición x,y
      * de la pantalla. Mapea cada de la imagen en
@@ -13,10 +13,10 @@ public interface Graphics{
      * @param x Posición x en la pantalla
      * @param y Posición y en la pantalla
      */
-    public void drawImage(Image image, int x, int y);
-    public void drawImage(Image image, Rect source, int x, int y);
-    public void drawImage(Image image, Rect source, Rect dest);
-    public void drawImage(Image image, Rect source, Rect dest, int alpha);
-    public void clear(int color);
+    void drawImage(Image image, int x, int y);
+    void drawImage(Image image, Rect source, int x, int y);
+    void drawImage(Image image, Rect source, Rect dest);
+    void drawImage(Image image, Rect source, Rect dest, int alpha);
+    void clear(int color);
 
 }

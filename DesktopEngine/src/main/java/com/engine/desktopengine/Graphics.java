@@ -7,11 +7,13 @@ import java.awt.*;
 
 public class Graphics extends com.engine.AbstractGraphics{
 
-    public Graphics(JFrame window){
+    public Graphics(JFrame window, int gameWidth, int gameHeight){
         _window=window;
 
         window.setIgnoreRepaint((true));
         window.setVisible(true);
+        _gameWidth = gameWidth;
+        _gameHeight = gameHeight;
 
     }
 
