@@ -25,26 +25,61 @@ public class GameOverState implements GameState {
         Random r = new Random();
         _rndColor = r.nextInt((8 - 0) + 1);
         Graphics graphics = _game.getGraphics();
-        int screenWidth = _game.getGraphics().getWidth();
-        int screenHeight = _game.getGraphics().getHeight();
+        int screenWidth = _game.getGameWidth();
+        int screenHeight = _game.getGameHeight();
         GameObject backgroundOb = new GameObject("background",new Sprite(graphics.newImage("Sprites/backgrounds.png"),
-                new Rect(32*_rndColor,0,32,32)),screenWidth/6 , 0, (screenWidth/3)*2, screenHeight);
+                new Rect(32*_rndColor,0,32,32)),screenWidth/6 , 0, (screenWidth/3)*2, screenHeight*2);
         gameObjects.add(backgroundOb);
         _flechas1 = new GameObject("arrows1",new Sprite(graphics.newImage("Sprites/arrowsBackground.png"),100),
                 screenWidth/6 , 0, (screenWidth/3)*2, screenHeight*2);
         _flechas2 = new GameObject("arrows2",new Sprite(graphics.newImage("Sprites/arrowsBackground.png"),100),
-                screenWidth/6 , -screenHeight*2, (screenWidth/3)*2, screenHeight*2);
+                screenWidth/6 , (-screenHeight*2)-1, (screenWidth/3)*2, screenHeight*2);
 
         GameObject gameOverSprite = new GameObject("gameOverSprite",new Sprite(graphics.newImage("Sprites/gameOver.png"),255),
-                (screenWidth/2)-(252/4) , screenHeight/5, 252/2, 208/2);
+                (screenWidth/2)-(252/2) , screenHeight/5, 252, 208);
         GameObject muteButton = new GameObject("muteButton",new Sprite(graphics.newImage("Sprites/buttons.png"),
                 new Rect(140*2, 0, 140, 140), 255),
-                (screenWidth/12)-(140/4) , screenHeight/8, 140/2, 140/2);
+                (screenWidth/12)-(140/2) , screenHeight/8, 140, 140);
         GameObject helpButton = new GameObject("helpButton",new Sprite(graphics.newImage("Sprites/buttons.png"),
                 new Rect(0, 0, 140, 140), 255),
-                screenWidth-((screenWidth/12)+(140/4)) , screenHeight/8, 140/2, 140/2);
-        tapSprite = new GameObject("tapSprite",new Sprite(graphics.newImage("Sprites/tapToPlay.png"),255),
-                (screenWidth/2)-(532/4) , (screenHeight/3)*2, 532/2, 72/2);
+                screenWidth-((screenWidth/12)+(140/2)) , screenHeight/8, 140, 140);
+        tapSprite = new GameObject("tapSprite",new Sprite(graphics.newImage("Sprites/playAgain.png"),255),
+                (screenWidth/2)-(532/2) , (screenHeight/3)*2, 532, 72);
+
+        for(int i =0; i< 3; i++){
+            int n =_points%10;
+            _points = (_points-1)/10;
+            if(n<8){
+            GameObject number = new GameObject("number",new Sprite(graphics.newImage("Sprites/scoreFont.png"),
+                    new Rect(125*(n+7), 160*3, 125, 160), 255),
+                    ((screenWidth/2)+105)-(210*i)+(60*(i-1)) , screenHeight/3, 210, 140*2);
+                gameObjects.add(number);
+            }
+            else{
+                GameObject number = new GameObject("number",new Sprite(graphics.newImage("Sprites/scoreFont.png"),
+                        new Rect(125*(n-8), 160*4, 125, 160), 255),
+                        ((screenWidth/2)+105)-(210*i)+(60*(i-1)) , screenHeight/3, 210, 140*2);
+                gameObjects.add(number);
+            }
+        }
+        GameObject p = new GameObject("p",new Sprite(graphics.newImage("Sprites/scoreFont.png"),
+                new Rect(125*0, 160*1, 125, 160), 255),
+                ((screenWidth/3)+(screenWidth/18)*0) , (screenHeight/3)+290, screenWidth/18, 210/2);
+        GameObject o = new GameObject("o",new Sprite(graphics.newImage("Sprites/scoreFont.png"),
+                new Rect(125*14, 160*0, 125, 160), 255),
+                ((screenWidth/3)+(screenWidth/18)*1) , (screenHeight/3)+290, screenWidth/18, 210/2);
+        GameObject i = new GameObject("i",new Sprite(graphics.newImage("Sprites/scoreFont.png"),
+                new Rect(125*8, 160*0, 125, 160), 255),
+                ((screenWidth/3)+(screenWidth/18)*2) , (screenHeight/3)+290, screenWidth/18, 210/2);
+        GameObject n = new GameObject("n",new Sprite(graphics.newImage("Sprites/scoreFont.png"),
+                new Rect(125*13, 160*0, 125, 160), 255),
+                ((screenWidth/3)+(screenWidth/18)*3) , (screenHeight/3)+290, screenWidth/18, 210/2);
+        GameObject t = new GameObject("t",new Sprite(graphics.newImage("Sprites/scoreFont.png"),
+                new Rect(125*4, 160*1, 125, 160), 255),
+                ((screenWidth/3)+(screenWidth/18)*4) , (screenHeight/3)+290, screenWidth/18, 210/2);
+        GameObject s = new GameObject("s",new Sprite(graphics.newImage("Sprites/scoreFont.png"),
+                new Rect(125*3, 160*1, 125, 160), 255),
+                ((screenWidth/3)+(screenWidth/18)*5) , (screenHeight/3)+290, screenWidth/18, 210/2);
 
 
 
@@ -55,6 +90,12 @@ public class GameOverState implements GameState {
         gameObjects.add(muteButton);
         gameObjects.add(helpButton);
         gameObjects.add(tapSprite);
+        gameObjects.add(p);
+        gameObjects.add(o);
+        gameObjects.add(i);
+        gameObjects.add(n);
+        gameObjects.add(t);
+        gameObjects.add(s);
 
     }
 
@@ -94,8 +135,8 @@ public class GameOverState implements GameState {
         _flechas1.setY(_flechas1.getY() + 1);
         _flechas2.setY(_flechas2.getY() + 1);
 
-        if(_flechas1.getY()>_game.getGraphics().getHeight())_flechas1.setY((-_game.getGraphics().getHeight()*3)+1);
-        if(_flechas2.getY()>_game.getGraphics().getHeight())_flechas2.setY((-_game.getGraphics().getHeight()*3)+1);
+        if(_flechas1.getY()>_game.getGameHeight())_flechas1.setY((-_game.getGameHeight()*3)-1);
+        if(_flechas2.getY()>_game.getGameHeight())_flechas2.setY((-_game.getGameHeight()*3)-1);
     }
 
 

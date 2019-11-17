@@ -24,26 +24,26 @@ public class MenuState implements GameState {
         Random r = new Random();
         _rndColor = r.nextInt((8 - 0) + 1);
         Graphics graphics = _game.getGraphics();
-        int screenWidth = _game.getGraphics().getWidth();
-        int screenHeight = _game.getGraphics().getHeight();
+        int screenWidth = _game.getGameWidth();
+        int screenHeight = _game.getGameHeight();
         GameObject backgroundOb = new GameObject("background",new Sprite(graphics.newImage("Sprites/backgrounds.png"),
-                new Rect(32*_rndColor,0,32,32)),screenWidth/6 , 0, (screenWidth/3)*2, screenHeight);
+                new Rect(32*_rndColor,0,32,32)),screenWidth/6 , 0, (screenWidth/3)*2, screenHeight*2);
         gameObjects.add(backgroundOb);
         _flechas1 = new GameObject("arrows1",new Sprite(graphics.newImage("Sprites/arrowsBackground.png"),100),
                 screenWidth/6 , 0, (screenWidth/3)*2, screenHeight*2);
         _flechas2 = new GameObject("arrows2",new Sprite(graphics.newImage("Sprites/arrowsBackground.png"),100),
-                screenWidth/6 , -screenHeight*2, (screenWidth/3)*2, screenHeight*2);
+                screenWidth/6 , (-screenHeight*2)-1, (screenWidth/3)*2, screenHeight*2);
 
         GameObject logo = new GameObject("logo",new Sprite(graphics.newImage("Sprites/switchDashLogo.png"),255),
-                (screenWidth/2)-(508/4) , screenHeight/5, 508/2, 368/2);
+                (screenWidth/2)-(508/2) , screenHeight/5, 508, 368);
         GameObject muteButton = new GameObject("muteButton",new Sprite(graphics.newImage("Sprites/buttons.png"),
                 new Rect(140*2, 0, 140, 140), 255),
-                (screenWidth/12)-(140/4) , screenHeight/8, 140/2, 140/2);
+                (screenWidth/12)-(140/2) , screenHeight/8, 140, 140);
         GameObject helpButton = new GameObject("helpButton",new Sprite(graphics.newImage("Sprites/buttons.png"),
                 new Rect(0, 0, 140, 140), 255),
-                screenWidth-((screenWidth/12)+(140/4)) , screenHeight/8, 140/2, 140/2);
+                screenWidth-((screenWidth/12)+(140/2)) , screenHeight/8, 140, 140);
         tapSprite = new GameObject("tapSprite",new Sprite(graphics.newImage("Sprites/tapToPlay.png"),255),
-                (screenWidth/2)-(506/4) , screenHeight/2, 506/2, 72/2);
+                (screenWidth/2)-(506/2) , screenHeight/2, 506, 72);
         _tapAnimUp = false;
         gameObjects.add(_flechas1);
         gameObjects.add(_flechas2);
@@ -90,8 +90,8 @@ public class MenuState implements GameState {
         _flechas1.setY(_flechas1.getY() + 1);
         _flechas2.setY(_flechas2.getY() + 1);
 
-        if(_flechas1.getY()>_game.getGraphics().getHeight())_flechas1.setY((-_game.getGraphics().getHeight()*3)+1);
-        if(_flechas2.getY()>_game.getGraphics().getHeight())_flechas2.setY((-_game.getGraphics().getHeight()*3)+1);
+        if(_flechas1.getY()>_game.getGameHeight())_flechas1.setY((-_game.getGameHeight()*3)-1);
+        if(_flechas2.getY()>_game.getGameHeight())_flechas2.setY((-_game.getGameHeight()*3)-1);
     }
 
 

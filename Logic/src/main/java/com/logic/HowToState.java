@@ -24,25 +24,25 @@ public class HowToState implements GameState {
         Random r = new Random();
         _rndColor = r.nextInt((8 - 0) + 1);
         Graphics graphics = _game.getGraphics();
-        int screenWidth = _game.getGraphics().getWidth();
-        int screenHeight = _game.getGraphics().getHeight();
+        int screenWidth = _game.getGameWidth();
+        int screenHeight = _game.getGameHeight();
         GameObject backgroundOb = new GameObject("background",new Sprite(graphics.newImage("Sprites/backgrounds.png"),
-                new Rect(32*_rndColor,0,32,32)),screenWidth/6 , 0, (screenWidth/3)*2, screenHeight);
+                new Rect(32*_rndColor,0,32,32)),screenWidth/6 , 0, (screenWidth/3)*2, screenHeight*2);
         gameObjects.add(backgroundOb);
         _flechas1 = new GameObject("arrows1",new Sprite(graphics.newImage("Sprites/arrowsBackground.png"),100),
                 screenWidth/6 , 0, (screenWidth/3)*2, screenHeight*2);
         _flechas2 = new GameObject("arrows2",new Sprite(graphics.newImage("Sprites/arrowsBackground.png"),100),
-                screenWidth/6 , -screenHeight*2, (screenWidth/3)*2, screenHeight*2);
+                screenWidth/6 , (-screenHeight*2)-1, (screenWidth/3)*2, screenHeight*2);
 
         GameObject howToSprite = new GameObject("howToSprite",new Sprite(graphics.newImage("Sprites/howToPlay.png"),255),
-                (screenWidth/2)-(486/6) , screenHeight/6, 486/3, 354/3);
+                (screenWidth/2)-(486/3) , screenHeight/7, (486/3)*2, (354/3)*2);
         GameObject instructions = new GameObject("instructions",new Sprite(graphics.newImage("Sprites/instructions.png"),255),
-                (screenWidth/2)-(538/4) , screenHeight/3, 538/2, 551/2);
+                (screenWidth/2)-(538/2) , screenHeight/3, 538, 551);
         GameObject cancelButton = new GameObject("çancelButton",new Sprite(graphics.newImage("Sprites/buttons.png"),
                 new Rect(140, 0, 140, 140), 255),
-                screenWidth-((screenWidth/12)+(140/4)) , screenHeight/8, 140/2, 140/2);
+                screenWidth-((screenWidth/12)+(140/2)) , screenHeight/8, 140, 140);
         tapSprite = new GameObject("tapSprite",new Sprite(graphics.newImage("Sprites/tapToPlay.png"),255),
-                (screenWidth/2)-(506/4) , (screenHeight/3)*2, 506/2, 72/2);
+                (screenWidth/2)-(506/2) , (screenHeight/3)*2, 506, 72);
         _tapAnimUp = false;
         gameObjects.add(_flechas1);
         gameObjects.add(_flechas2);
@@ -89,8 +89,8 @@ public class HowToState implements GameState {
         _flechas1.setY(_flechas1.getY() + 1);
         _flechas2.setY(_flechas2.getY() + 1);
 
-        if(_flechas1.getY()>_game.getGraphics().getHeight())_flechas1.setY((-_game.getGraphics().getHeight()*3)+1);
-        if(_flechas2.getY()>_game.getGraphics().getHeight())_flechas2.setY((-_game.getGraphics().getHeight()*3)+1);
+        if(_flechas1.getY()>_game.getGameHeight())_flechas1.setY((-_game.getGameHeight()*3)-1);
+        if(_flechas2.getY()>_game.getGameHeight())_flechas2.setY((-_game.getGameHeight()*3)-1);
     }
 
 
@@ -111,7 +111,7 @@ public class HowToState implements GameState {
     int _gameHeight = 1920;
     int ballVel = 450;
     double _fUpdateTimer=0;
-    double _fixedUpdateDelay = 0.02;
+    double _fixedUpdateDelay = 0.002;
     GameObject _flechas1;
     GameObject _flechas2;
     GameObject tapSprite;
