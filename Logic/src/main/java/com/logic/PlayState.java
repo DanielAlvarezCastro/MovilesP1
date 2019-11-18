@@ -12,8 +12,14 @@ import java.util.List;
 import java.util.Vector;
 import java.util.Random;
 
-public class MenuState implements GameState {
-    public MenuState(Game game){
+class Ball
+{
+    public GameObject gameObject;
+    public boolean color;
+};
+
+public class PlayState implements GameState {
+    public PlayState(Game game){
         _game=game;
         gameObjects = new ArrayList<>();
     }
@@ -33,25 +39,22 @@ public class MenuState implements GameState {
         _flechas2 = new GameObject("arrows2",new Sprite(graphics.newImage("Sprites/arrowsBackground.png"),100),
                 screenWidth/6 , (-screenHeight*2)-1, (screenWidth/3)*2, screenHeight*2);
 
-        GameObject logo = new GameObject("logo",new Sprite(graphics.newImage("Sprites/switchDashLogo.png"),255),
-                (screenWidth/2)-(508/2) , screenHeight/5, 508, 368);
-        GameObject muteButton = new GameObject("muteButton",new Sprite(graphics.newImage("Sprites/buttons.png"),
-                new Rect(140*2, 0, 140, 140), 255),
-                (screenWidth/12)-(140/2) , screenHeight/8, 140, 140);
-        _helpButton = new GameObject("helpButton",new Sprite(graphics.newImage("Sprites/buttons.png"),
-                new Rect(0, 0, 140, 140), 255),
-                screenWidth-((screenWidth/12)+(140/2)) , screenHeight/8, 140, 140);
-        tapSprite = new GameObject("tapSprite",new Sprite(graphics.newImage("Sprites/tapToPlay.png"),255),
-                (screenWidth/2)-(506/2) , screenHeight/2, 506, 72);
-        _tapAnimUp = false;
-
         gameObjects.add(_backgroundOb);
         gameObjects.add(_flechas1);
         gameObjects.add(_flechas2);
-        gameObjects.add(logo);
-        gameObjects.add(muteButton);
-        gameObjects.add(_helpButton);
-        gameObjects.add(tapSprite);
+
+        _ballTimer=0;
+        balls = new Ball[nBalls];
+        //Init balls
+        for(int i=0; i < nBalls; i++){
+            Ball b = new Ball();
+            b.gameObject = new GameObject("ball"+i,new Sprite(graphics.newImage("Sprites/balls.png"),
+                    new Rect(0,128,128,128)),(_game.getGameWidth()/2)-50 , -500, 100, 100);
+            b.gameObject.setActive(false);
+            b.color=false;
+            balls[i]=b;
+            gameObjects.add(balls[i].gameObject);
+        }
 
     }
 
@@ -59,6 +62,7 @@ public class MenuState implements GameState {
     public void update(double deltaTime) {
         double incr = ballVel*deltaTime;
         _fUpdateTimer+=deltaTime;
+        _ballTimer+=deltaTime;
         if(_fUpdateTimer>=_fixedUpdateDelay) fixedUpdate(deltaTime);
         handleInput();
     }
@@ -71,8 +75,7 @@ public class MenuState implements GameState {
                 //System.out.println("WindowH" + _game.getGraphics().getHeight());
                 //System.out.println("X: "+ event.x);
                 //System.out.println("Y: "+ event.y);
-                if(_helpButton.within(event.x, event.y))_game.setGameState(new HowToState(_game));
-                else if(_backgroundOb.within(event.x, event.y))_game.setGameState(new GameOverState(_game, 95));
+                if(_backgroundOb.within(event.x, event.y))_game.setGameState(new GameOverState(_game, 95));
             }
         }
     }
@@ -80,19 +83,37 @@ public class MenuState implements GameState {
     public void fixedUpdate(double deltaTime){
         _fUpdateTimer-=_fixedUpdateDelay;
         animateArrows(deltaTime);
-        animateTap(deltaTime);
+        for (int i =0; i<nBalls; i++){
+            if(balls[i].gameObject.getActive())balls[i].gameObject.setY(balls[i].gameObject.getY()+3);
+        }
+        if(_ballTimer >= _fixedUpdateDelay*100){
+            throwBall();
+        }
     }
 
-    public void animateTap(double deltaTime){
-        if(_tapAnimUp) {
-            tapSprite.getSprite().setAlpha(tapSprite.getSprite().getAlpha()+5);//Bajar alfa
-            if(tapSprite.getSprite().getAlpha() >= 255) _tapAnimUp=false;
+    public void throwBall()
+    {
+        _ballTimer=0;
+        int i=0;
+        while(i<nBalls && balls[i].gameObject.getActive()){
+            i++;
         }
-        else{
-            tapSprite.getSprite().setAlpha(tapSprite.getSprite().getAlpha()-5);//Subir alfa
-            if(tapSprite.getSprite().getAlpha() <= 0) _tapAnimUp=true;
+        balls[i].gameObject.setActive(true);
+        balls[i].gameObject.setY(0);
+        Random rnd = new Random();
+        int r = rnd.nextInt((1 - 0) + 1);
+        System.out.println(r);
+        if(r==0){
+            balls[i].color=false;
+            balls[i].gameObject.setSprite(new Sprite(_game.getGraphics().newImage("Sprites/balls.png"),
+                    new Rect(0,128,128,128)));
+        }else{
+            balls[i].color=true;
+            balls[i].gameObject.setSprite(new Sprite(_game.getGraphics().newImage("Sprites/balls.png"),
+                    new Rect(0,0,128,128)));
         }
     }
+
     public void animateArrows(double deltaTime){
         _flechas1.setY(_flechas1.getY() + 1);
         _flechas2.setY(_flechas2.getY() + 1);
@@ -122,13 +143,14 @@ public class MenuState implements GameState {
     double _fixedUpdateDelay = 0.02;
     GameObject _flechas1;
     GameObject _flechas2;
-    GameObject tapSprite;
     GameObject _backgroundOb;
-    GameObject _helpButton;
     boolean _tapAnimUp;
     int[] _colors = { 0xFF41a85f, 0xFF00a885, 0xFF3d8eb9, 0xFF2969b0, 0xFF553982, 0xFF28324e, 0xFFf37934,
             0xFFd14b41, 0xFF75706b};
     int _rndColor;
+    Ball[] balls;
+    double _ballTimer;
+    int nBalls = 20;
     List<GameObject> gameObjects;
     Game _game;
 }

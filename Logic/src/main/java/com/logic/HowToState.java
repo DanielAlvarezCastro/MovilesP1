@@ -118,8 +118,8 @@ public class HowToState implements GameState {
     GameObject tapSprite;
     GameObject _cancelButton;
     boolean _tapAnimUp;
-    int[] _colors = { 0x41a85f, 0x00a885, 0x3d8eb9, 0x2969b0, 0x553982, 0x28324e, 0xf37934,
-            0xd14b41, 0x75706b};;
+    int[] _colors = { 0xFF41a85f, 0xFF00a885, 0xFF3d8eb9, 0xFF2969b0, 0xFF553982, 0xFF28324e, 0xFFf37934,
+            0xFFd14b41, 0xFF75706b};
     int _rndColor;
     List<GameObject> gameObjects;
     Game _game;

@@ -26,10 +26,15 @@ public class GameObject {
     public Sprite getSprite(){
         return _sprite;
     }
+    public void setSprite(Sprite sprite){
+        _sprite = sprite;
+    }
 
     public boolean within( int x_, int y_){
         return _dest.within(x_,y_);
     }
+    public void setActive(boolean active){_active = active;}
+    public boolean getActive(){return _active;}
     public int getX(){
         return  _dest.x;
     }
