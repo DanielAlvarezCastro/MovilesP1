@@ -57,9 +57,26 @@ public abstract class AbstractGraphics implements Graphics {
         screenRect.h = (int)(dest.h * ratio);
         //Pasar de cóordenadas lógicas a coordenadas de pantalla y dibujar
         drawImagePrivate(image, source, screenRect, alpha);
+
+        //Pinta las bandas negras
+        Rect leftBar = new Rect (0,0,(int)xOffset, getHeight());
+        drawRectPrivate(leftBar, 0);
+
+        Rect rightBar = new Rect (getWidth()-(int)xOffset,0,(int)xOffset, getHeight());
+        drawRectPrivate(rightBar, 0);
+
+        Rect upBar = new Rect (0,0, getWidth(), (int)yOffset);
+        drawRectPrivate(upBar, 0);
+
+        Rect downBar = new Rect (0,getHeight() - (int)yOffset, getWidth(), (int)yOffset);
+        drawRectPrivate(downBar, 0);
+
+
+
     }
 
     protected abstract void drawImagePrivate(Image image, Rect source, Rect dest, int alpha);
+    protected abstract void drawRectPrivate(Rect dest, int color);
 
     protected int _gameWidth;
     protected int _gameHeight;

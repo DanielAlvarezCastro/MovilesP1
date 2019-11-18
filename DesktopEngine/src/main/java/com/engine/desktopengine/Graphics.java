@@ -55,6 +55,13 @@ public class Graphics extends com.engine.AbstractGraphics{
     }
 
     @Override
+    protected void drawRectPrivate(Rect dest, int color) {
+        System.out.println(dest.x + " " + dest.y + " " +  (dest.w) + " " +  (dest.h));
+        _graphics.setColor(new Color(color));
+        _graphics.fillRect(dest.x, dest.y, dest.w, dest.h);
+    }
+
+    @Override
     public Image newImage(String name){
         try {
             //Crea una image de java con el nombre del archivo

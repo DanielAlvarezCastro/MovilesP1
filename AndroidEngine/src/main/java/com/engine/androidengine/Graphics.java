@@ -57,6 +57,14 @@ public class Graphics extends com.engine.AbstractGraphics{
     }
 
     @Override
+    protected void drawRectPrivate(Rect dest, int color) {
+        android.graphics.Rect dst = new android.graphics.Rect(dest.x, dest.y, dest.w, dest.h);
+        Paint paint = new Paint();
+        paint.setColor(color);
+        _canvas.drawRect(dst,paint);
+    }
+
+    @Override
     public Image newImage(String name){
 
 
