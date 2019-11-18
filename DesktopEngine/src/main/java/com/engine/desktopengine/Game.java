@@ -19,7 +19,7 @@ public class Game implements com.engine.Game{
         window.createBufferStrategy(2);
         // Obtenemos el Buffer Strategy que se supone acaba de crearse.
         _strategy = window.getBufferStrategy();
-        _input = new Input();
+        _input = new Input(this);
         window.addMouseListener(_input);
 
     }

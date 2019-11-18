@@ -60,9 +60,17 @@ public class MenuState implements GameState {
         double incr = ballVel*deltaTime;
         _fUpdateTimer+=deltaTime;
         if(_fUpdateTimer>=_fixedUpdateDelay) fixedUpdate(deltaTime);
+        handleInput();
+    }
+
+    public void handleInput(){
         List<Input.TouchEvent> events = _game.getInput().getTouchEvents();
         for (Input.TouchEvent event : events) {
             if(event.type == Input.EventType.clicked){
+                //System.out.println("WindowW" + _game.getGraphics().getWidth());
+                //System.out.println("WindowH" + _game.getGraphics().getHeight());
+                //System.out.println("X: "+ event.x);
+                //System.out.println("Y: "+ event.y);
                 if(_helpButton.within(event.x, event.y))_game.setGameState(new HowToState(_game));
                 else if(_backgroundOb.within(event.x, event.y))_game.setGameState(new GameOverState(_game, 95));
             }

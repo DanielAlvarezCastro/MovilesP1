@@ -15,7 +15,7 @@ public class Game implements com.engine.Game, Runnable {
         _surfaceView = surfaceView;
         _graphics = new Graphics(surfaceView, assetManager, _gameWidth, _gameHeight);
         _holder = surfaceView.getHolder();
-        _input = new Input();
+        _input = new Input(this);
         _surfaceView.setOnTouchListener(_input);
 
     }

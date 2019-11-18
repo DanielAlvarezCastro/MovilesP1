@@ -9,6 +9,9 @@ import static android.view.MotionEvent.ACTION_UP;
 
 public class Input extends com.engine.AbstractInput implements View.OnTouchListener {
 
+	public Input(Game game){
+		_game = game;
+	}
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 

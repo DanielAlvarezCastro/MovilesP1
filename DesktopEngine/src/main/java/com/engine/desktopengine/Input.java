@@ -7,6 +7,9 @@ import static java.awt.event.MouseEvent.BUTTON1;
 
 public class Input extends com.engine.AbstractInput implements MouseListener {
 
+	public Input(Game game){
+		_game = game;
+	}
 	@Override
 	public void mouseClicked(MouseEvent mouseEvent) {
 		TouchEvent e = new TouchEvent();
@@ -50,7 +53,5 @@ public class Input extends com.engine.AbstractInput implements MouseListener {
 
 	}
 
-
-	//TODO devuelve la lista de eventos recibidos desde la última invocación
 
 }
