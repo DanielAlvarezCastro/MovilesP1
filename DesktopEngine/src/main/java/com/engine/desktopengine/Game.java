@@ -26,6 +26,8 @@ public class Game implements com.engine.Game{
     @Override
     public void setGameState(GameState gameState) {
         _gameState = gameState;
+        _gameState.init();
+
     }
 
     @Override

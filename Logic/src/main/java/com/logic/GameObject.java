@@ -26,6 +26,10 @@ public class GameObject {
     public Sprite getSprite(){
         return _sprite;
     }
+
+    public boolean within( int x_, int y_){
+        return _dest.within(x_,y_);
+    }
     public int getX(){
         return  _dest.x;
     }

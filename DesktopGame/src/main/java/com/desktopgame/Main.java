@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args){
 		//Crea un objeto Game del desktopEngine. un GameLogic y los enlaza
         Game desktopGame = new Game();
-        GameOverState gameLogic = new GameOverState(desktopGame, 0);
+        MenuState gameLogic = new MenuState(desktopGame);
 
         desktopGame.setGameState(gameLogic);
         //Ejecuta el bucle principal del juego

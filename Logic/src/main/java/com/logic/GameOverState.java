@@ -27,9 +27,9 @@ public class GameOverState implements GameState {
         Graphics graphics = _game.getGraphics();
         int screenWidth = _game.getGameWidth();
         int screenHeight = _game.getGameHeight();
-        GameObject backgroundOb = new GameObject("background",new Sprite(graphics.newImage("Sprites/backgrounds.png"),
+        _backgroundOb = new GameObject("background",new Sprite(graphics.newImage("Sprites/backgrounds.png"),
                 new Rect(32*_rndColor,0,32,32)),screenWidth/6 , 0, (screenWidth/3)*2, screenHeight*2);
-        gameObjects.add(backgroundOb);
+        gameObjects.add(_backgroundOb);
         _flechas1 = new GameObject("arrows1",new Sprite(graphics.newImage("Sprites/arrowsBackground.png"),100),
                 screenWidth/6 , 0, (screenWidth/3)*2, screenHeight*2);
         _flechas2 = new GameObject("arrows2",new Sprite(graphics.newImage("Sprites/arrowsBackground.png"),100),
@@ -40,7 +40,7 @@ public class GameOverState implements GameState {
         GameObject muteButton = new GameObject("muteButton",new Sprite(graphics.newImage("Sprites/buttons.png"),
                 new Rect(140*2, 0, 140, 140), 255),
                 (screenWidth/12)-(140/2) , screenHeight/8, 140, 140);
-        GameObject helpButton = new GameObject("helpButton",new Sprite(graphics.newImage("Sprites/buttons.png"),
+        _helpButton = new GameObject("helpButton",new Sprite(graphics.newImage("Sprites/buttons.png"),
                 new Rect(0, 0, 140, 140), 255),
                 screenWidth-((screenWidth/12)+(140/2)) , screenHeight/8, 140, 140);
         tapSprite = new GameObject("tapSprite",new Sprite(graphics.newImage("Sprites/playAgain.png"),255),
@@ -88,7 +88,7 @@ public class GameOverState implements GameState {
         gameObjects.add(_flechas2);
         gameObjects.add(gameOverSprite);
         gameObjects.add(muteButton);
-        gameObjects.add(helpButton);
+        gameObjects.add(_helpButton);
         gameObjects.add(tapSprite);
         gameObjects.add(p);
         gameObjects.add(o);
@@ -104,13 +104,13 @@ public class GameOverState implements GameState {
         double incr = ballVel*deltaTime;
         _fUpdateTimer+=deltaTime;
         if(_fUpdateTimer>=_fixedUpdateDelay) fixedUpdate(deltaTime);
-        //int posY = test.getY();
-        //int newPosY = (int)(posY+incr);
-        //test.setY(newPosY);
         List<Input.TouchEvent> events = _game.getInput().getTouchEvents();
         for (Input.TouchEvent event : events) {
             if(event.type == Input.EventType.clicked){
-                ballVel*=-1;
+                if(event.type == Input.EventType.clicked){
+                    if(_helpButton.within(event.x, event.y))_game.setGameState(new HowToState(_game));
+                    else if(_backgroundOb.within(event.x, event.y))_game.setGameState(new MenuState(_game));
+                }
             }
         }
     }
@@ -162,6 +162,8 @@ public class GameOverState implements GameState {
     GameObject _flechas1;
     GameObject _flechas2;
     GameObject tapSprite;
+    GameObject _backgroundOb;
+    GameObject _helpButton;
     boolean _tapAnimUp;
     int[] _colors = { 0x41a85f, 0x00a885, 0x3d8eb9, 0x2969b0, 0x553982, 0x28324e, 0xf37934,
             0xd14b41, 0x75706b};;

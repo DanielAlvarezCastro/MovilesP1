@@ -26,9 +26,9 @@ public class HowToState implements GameState {
         Graphics graphics = _game.getGraphics();
         int screenWidth = _game.getGameWidth();
         int screenHeight = _game.getGameHeight();
-        GameObject backgroundOb = new GameObject("background",new Sprite(graphics.newImage("Sprites/backgrounds.png"),
+        _backgroundOb = new GameObject("background",new Sprite(graphics.newImage("Sprites/backgrounds.png"),
                 new Rect(32*_rndColor,0,32,32)),screenWidth/6 , 0, (screenWidth/3)*2, screenHeight*2);
-        gameObjects.add(backgroundOb);
+        gameObjects.add(_backgroundOb);
         _flechas1 = new GameObject("arrows1",new Sprite(graphics.newImage("Sprites/arrowsBackground.png"),100),
                 screenWidth/6 , 0, (screenWidth/3)*2, screenHeight*2);
         _flechas2 = new GameObject("arrows2",new Sprite(graphics.newImage("Sprites/arrowsBackground.png"),100),
@@ -38,7 +38,7 @@ public class HowToState implements GameState {
                 (screenWidth/2)-(486/3) , screenHeight/7, (486/3)*2, (354/3)*2);
         GameObject instructions = new GameObject("instructions",new Sprite(graphics.newImage("Sprites/instructions.png"),255),
                 (screenWidth/2)-(538/2) , screenHeight/3, 538, 551);
-        GameObject cancelButton = new GameObject("çancelButton",new Sprite(graphics.newImage("Sprites/buttons.png"),
+        _cancelButton = new GameObject("çancelButton",new Sprite(graphics.newImage("Sprites/buttons.png"),
                 new Rect(140, 0, 140, 140), 255),
                 screenWidth-((screenWidth/12)+(140/2)) , screenHeight/8, 140, 140);
         tapSprite = new GameObject("tapSprite",new Sprite(graphics.newImage("Sprites/tapToPlay.png"),255),
@@ -48,7 +48,7 @@ public class HowToState implements GameState {
         gameObjects.add(_flechas2);
         gameObjects.add(howToSprite);
         gameObjects.add(instructions);
-        gameObjects.add(cancelButton);
+        gameObjects.add(_cancelButton);
         gameObjects.add(tapSprite);
 
     }
@@ -58,13 +58,13 @@ public class HowToState implements GameState {
         double incr = ballVel*deltaTime;
         _fUpdateTimer+=deltaTime;
         if(_fUpdateTimer>=_fixedUpdateDelay) fixedUpdate(deltaTime);
-        //int posY = test.getY();
-        //int newPosY = (int)(posY+incr);
-        //test.setY(newPosY);
         List<Input.TouchEvent> events = _game.getInput().getTouchEvents();
         for (Input.TouchEvent event : events) {
             if(event.type == Input.EventType.clicked){
-                ballVel*=-1;
+                if(event.type == Input.EventType.clicked){
+                    if(_cancelButton.within(event.x, event.y))_game.setGameState(new MenuState(_game));
+                    else if(_backgroundOb.within(event.x, event.y))_game.setGameState(new GameOverState(_game, 23));
+                }
             }
         }
     }
@@ -112,9 +112,11 @@ public class HowToState implements GameState {
     int ballVel = 450;
     double _fUpdateTimer=0;
     double _fixedUpdateDelay = 0.002;
+    GameObject _backgroundOb;
     GameObject _flechas1;
     GameObject _flechas2;
     GameObject tapSprite;
+    GameObject _cancelButton;
     boolean _tapAnimUp;
     int[] _colors = { 0x41a85f, 0x00a885, 0x3d8eb9, 0x2969b0, 0x553982, 0x28324e, 0xf37934,
             0xd14b41, 0x75706b};;

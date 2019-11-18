@@ -23,6 +23,7 @@ public class Game implements com.engine.Game, Runnable {
     @Override
     public void setGameState(GameState gameState) {
         _gameState = gameState;
+        _gameState.init();
     }
 
     @Override

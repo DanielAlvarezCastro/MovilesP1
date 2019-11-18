@@ -13,4 +13,11 @@ public class Rect{
     public int y;
     public int w;
     public int h;
+
+    public boolean within( int x_, int y_){
+        if((x_ >= x && x_ <= x+w)&&(y_ >= y && y_ <= y+h)){
+            return  true;
+        }
+        return false;
+    }
 }
