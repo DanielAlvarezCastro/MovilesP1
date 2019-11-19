@@ -22,6 +22,7 @@ public class PlayState implements GameState {
     public PlayState(Game game){
         _game=game;
         gameObjects = new ArrayList<>();
+        _pointsGo = new ArrayList<>();
     }
 
     @Override
@@ -43,6 +44,13 @@ public class PlayState implements GameState {
         gameObjects.add(_flechas1);
         gameObjects.add(_flechas2);
 
+        _player = new GameObject("background",new Sprite(graphics.newImage("Sprites/players.png"),
+                new Rect(0,0,528,192)),
+                screenWidth/2-528/2 , (screenHeight/3)*2, 528, 192);
+        gameObjects.add(_player);
+        _actualColor = true;
+        addPoint();
+
         _ballTimer=0;
         balls = new Ball[nBalls];
         //Init balls
@@ -58,9 +66,28 @@ public class PlayState implements GameState {
 
     }
 
+    public void playerSwap(){
+        if(_actualColor){
+            _actualColor=false;
+            _player.setSprite(new Sprite(_game.getGraphics().newImage("Sprites/players.png"),
+                    new Rect(0,192,528,192)));
+        }
+        else{
+            _actualColor=true;
+            _player.setSprite(new Sprite(_game.getGraphics().newImage("Sprites/players.png"),
+                    new Rect(0,0,528,192)));
+        }
+    }
+
     @Override
     public void update(double deltaTime) {
         double incr = ballVel*deltaTime;
+        _speedTimer+=deltaTime;
+        if(_speedTimer > 2 && _fixedUpdateDelay > 0.002) {
+            _speedTimer =0;
+            _fixedUpdateDelay -=0.0005;
+            System.out.println(_fixedUpdateDelay);
+        }
         _fUpdateTimer+=deltaTime;
         _ballTimer+=deltaTime;
         if(_fUpdateTimer>=_fixedUpdateDelay) fixedUpdate(deltaTime);
@@ -71,23 +98,75 @@ public class PlayState implements GameState {
         List<Input.TouchEvent> events = _game.getInput().getTouchEvents();
         for (Input.TouchEvent event : events) {
             if(event.type == Input.EventType.clicked){
-                //System.out.println("WindowW" + _game.getGraphics().getWidth());
-                //System.out.println("WindowH" + _game.getGraphics().getHeight());
-                //System.out.println("X: "+ event.x);
-                //System.out.println("Y: "+ event.y);
-                if(_backgroundOb.within(event.x, event.y))_game.setGameState(new GameOverState(_game, 95));
+                playerSwap();
             }
         }
     }
 
     public void fixedUpdate(double deltaTime){
         _fUpdateTimer-=_fixedUpdateDelay;
+
         animateArrows(deltaTime);
-        for (int i =0; i<nBalls; i++){
-            if(balls[i].gameObject.getActive())balls[i].gameObject.setY(balls[i].gameObject.getY()+3);
-        }
+        updateBalls();
         if(_ballTimer >= _fixedUpdateDelay*100){
             throwBall();
+        }
+    }
+
+    public  void updateBalls(){
+        for (int i =0; i<nBalls; i++){
+            if(balls[i].gameObject.getActive())
+            {
+                balls[i].gameObject.setY(balls[i].gameObject.getY()+_game.getGameHeight()/300);
+                if(balls[i].gameObject.getY() > ((_game.getGameHeight()/3)*2)-100){
+                    balls[i].gameObject.setActive(false);
+                    if(balls[i].color != _actualColor) _game.setGameState(new GameOverState(_game, _points));
+                    else addPoint();
+                }
+            }
+        }
+    }
+
+    public void addPoint(){
+        _points++;
+        int aux = _points;
+        int i=0;
+        if(_points ==0){
+            GameObject number = new GameObject("number", new Sprite(_game.getGraphics().newImage("Sprites/scoreFont.png"),
+                    new Rect(125 * (0 + 7), 160 * 3, 125, 160), 255),
+                    ((_game.getGameWidth()-_game.getGameWidth()/7) + 105) - (210/2 * i) + (60 * (i - 1)), _game.getGameHeight() / 8, 210 / 2, 140);
+            _pointsGo.add(number);
+            gameObjects.add(number);
+        }
+        else{
+            while(aux != 0) {
+                int n = aux % 10;
+                aux = (aux - n) / 10;
+                if (_pointsGo.size() <= i) {
+                    if (n < 8) {
+                        GameObject number = new GameObject("number"+i, new Sprite(_game.getGraphics().newImage("Sprites/scoreFont.png"),
+                                new Rect(125 * (n + 7), 160 * 3, 125, 160), 255),
+                                ((_game.getGameWidth()-_game.getGameWidth()/7) + 105) - (210/2 * i) + (60 * (i - 1)), _game.getGameHeight() / 8, 210 / 2, 140);
+                        _pointsGo.add(number);
+                        gameObjects.add(number);
+                    } else {
+                        GameObject number = new GameObject("number"+i, new Sprite(_game.getGraphics().newImage("Sprites/scoreFont.png"),
+                                new Rect(125 * (n - 8), 160 * 4, 125, 160), 255),
+                                ((_game.getGameWidth()-_game.getGameWidth()/7) + 105) - (210/2 * i) + (60 * (i - 1)), _game.getGameHeight() / 8, 210, 140 * 2);
+                        _pointsGo.add(number);
+                        gameObjects.add(number);
+                    }
+                } else {
+                    if (n < 8) {
+                        _pointsGo.get(i).setSprite(new Sprite(_game.getGraphics().newImage("Sprites/scoreFont.png"),
+                                new Rect(125 * (n + 7), 160 * 3, 125, 160), 255));
+                    } else {
+                        _pointsGo.get(i).setSprite(new Sprite(_game.getGraphics().newImage("Sprites/scoreFont.png"),
+                                new Rect(125 * (n - 8), 160 * 4, 125, 160), 255));
+                    }
+                }
+                i++;
+            }
         }
     }
 
@@ -99,10 +178,9 @@ public class PlayState implements GameState {
             i++;
         }
         balls[i].gameObject.setActive(true);
-        balls[i].gameObject.setY(0);
+        balls[i].gameObject.setY(-100);
         Random rnd = new Random();
         int r = rnd.nextInt((1 - 0) + 1);
-        System.out.println(r);
         if(r==0){
             balls[i].color=false;
             balls[i].gameObject.setSprite(new Sprite(_game.getGraphics().newImage("Sprites/balls.png"),
@@ -115,11 +193,11 @@ public class PlayState implements GameState {
     }
 
     public void animateArrows(double deltaTime){
-        _flechas1.setY(_flechas1.getY() + 1);
-        _flechas2.setY(_flechas2.getY() + 1);
+        _flechas1.setY(_flechas1.getY() + _game.getGameHeight()/500);
+        _flechas2.setY(_flechas2.getY() + _game.getGameHeight()/500);
 
-        if(_flechas1.getY()>_game.getGameHeight())_flechas1.setY((-_game.getGameHeight()*3)-1);
-        if(_flechas2.getY()>_game.getGameHeight())_flechas2.setY((-_game.getGameHeight()*3)-1);
+        if(_flechas1.getY()>_game.getGameHeight())_flechas1.setY((-_game.getGameHeight()*3)+1);
+        if(_flechas2.getY()>_game.getGameHeight())_flechas2.setY((-_game.getGameHeight()*3));
     }
 
 
@@ -140,17 +218,22 @@ public class PlayState implements GameState {
     int _gameHeight = 1920;
     int ballVel = 450;
     double _fUpdateTimer=0;
+    double _speedTimer =0;
     double _fixedUpdateDelay = 0.02;
     GameObject _flechas1;
     GameObject _flechas2;
     GameObject _backgroundOb;
+    GameObject _player;
+    boolean _actualColor;
     boolean _tapAnimUp;
     int[] _colors = { 0xFF41a85f, 0xFF00a885, 0xFF3d8eb9, 0xFF2969b0, 0xFF553982, 0xFF28324e, 0xFFf37934,
             0xFFd14b41, 0xFF75706b};
     int _rndColor;
     Ball[] balls;
     double _ballTimer;
-    int nBalls = 20;
+    int nBalls = 12;
+    int _points =-1;
+    List<GameObject> _pointsGo;
     List<GameObject> gameObjects;
     Game _game;
 }

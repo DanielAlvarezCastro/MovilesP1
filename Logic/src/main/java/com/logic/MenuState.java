@@ -72,7 +72,7 @@ public class MenuState implements GameState {
                 //System.out.println("X: "+ event.x);
                 //System.out.println("Y: "+ event.y);
                 if(_helpButton.within(event.x, event.y))_game.setGameState(new HowToState(_game));
-                else if(_backgroundOb.within(event.x, event.y))_game.setGameState(new GameOverState(_game, 95));
+                else if(_backgroundOb.within(event.x, event.y))_game.setGameState(new PlayState(_game));
             }
         }
     }
@@ -94,11 +94,11 @@ public class MenuState implements GameState {
         }
     }
     public void animateArrows(double deltaTime){
-        _flechas1.setY(_flechas1.getY() + 1);
-        _flechas2.setY(_flechas2.getY() + 1);
+        _flechas1.setY(_flechas1.getY() + _game.getGameHeight()/500);
+        _flechas2.setY(_flechas2.getY() + _game.getGameHeight()/500);
 
-        if(_flechas1.getY()>_game.getGameHeight())_flechas1.setY((-_game.getGameHeight()*3)-1);
-        if(_flechas2.getY()>_game.getGameHeight())_flechas2.setY((-_game.getGameHeight()*3)-1);
+        if(_flechas1.getY()>_game.getGameHeight())_flechas1.setY((-_game.getGameHeight()*3)+1);
+        if(_flechas2.getY()>_game.getGameHeight())_flechas2.setY((-_game.getGameHeight()*3));
     }
 
 

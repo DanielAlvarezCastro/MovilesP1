@@ -48,7 +48,7 @@ public class GameOverState implements GameState {
 
         for(int i =0; i< 3; i++){
             int n =_points%10;
-            _points = (_points-1)/10;
+            _points = (_points-n)/10;
             if(n<8){
             GameObject number = new GameObject("number",new Sprite(graphics.newImage("Sprites/scoreFont.png"),
                     new Rect(125*(n+7), 160*3, 125, 160), 255),
@@ -109,7 +109,7 @@ public class GameOverState implements GameState {
             if(event.type == Input.EventType.clicked){
                 if(event.type == Input.EventType.clicked){
                     if(_helpButton.within(event.x, event.y))_game.setGameState(new HowToState(_game));
-                    else if(_backgroundOb.within(event.x, event.y))_game.setGameState(new MenuState(_game));
+                    else if(_backgroundOb.within(event.x, event.y))_game.setGameState(new PlayState(_game));
                 }
             }
         }
@@ -132,11 +132,11 @@ public class GameOverState implements GameState {
         }
     }
     public void animateArrows(double deltaTime){
-        _flechas1.setY(_flechas1.getY() + 1);
-        _flechas2.setY(_flechas2.getY() + 1);
+        _flechas1.setY(_flechas1.getY() + _game.getGameHeight()/500);
+        _flechas2.setY(_flechas2.getY() + _game.getGameHeight()/500);
 
-        if(_flechas1.getY()>_game.getGameHeight())_flechas1.setY((-_game.getGameHeight()*3)-1);
-        if(_flechas2.getY()>_game.getGameHeight())_flechas2.setY((-_game.getGameHeight()*3)-1);
+        if(_flechas1.getY()>_game.getGameHeight())_flechas1.setY((-_game.getGameHeight()*3)+1);
+        if(_flechas2.getY()>_game.getGameHeight())_flechas2.setY((-_game.getGameHeight()*3));
     }
 
 

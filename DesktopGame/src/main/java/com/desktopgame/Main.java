@@ -5,6 +5,7 @@ import com.logic.GameLogic;
 import com.logic.GameOverState;
 import com.logic.HowToState;
 import com.logic.MenuState;
+import com.logic.PlayState;
 
 public class Main {
     public static void main(String[] args){

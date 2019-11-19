@@ -63,7 +63,7 @@ public class HowToState implements GameState {
             if(event.type == Input.EventType.clicked){
                 if(event.type == Input.EventType.clicked){
                     if(_cancelButton.within(event.x, event.y))_game.setGameState(new MenuState(_game));
-                    else if(_backgroundOb.within(event.x, event.y))_game.setGameState(new GameOverState(_game, 23));
+                    else if(_backgroundOb.within(event.x, event.y))_game.setGameState(new PlayState(_game));
                 }
             }
         }
@@ -86,11 +86,11 @@ public class HowToState implements GameState {
         }
     }
     public void animateArrows(double deltaTime){
-        _flechas1.setY(_flechas1.getY() + 1);
-        _flechas2.setY(_flechas2.getY() + 1);
+        _flechas1.setY(_flechas1.getY() + _game.getGameHeight()/500);
+        _flechas2.setY(_flechas2.getY() + _game.getGameHeight()/500);
 
-        if(_flechas1.getY()>_game.getGameHeight())_flechas1.setY((-_game.getGameHeight()*3)-1);
-        if(_flechas2.getY()>_game.getGameHeight())_flechas2.setY((-_game.getGameHeight()*3)-1);
+        if(_flechas1.getY()>_game.getGameHeight())_flechas1.setY((-_game.getGameHeight()*3)+1);
+        if(_flechas2.getY()>_game.getGameHeight())_flechas2.setY((-_game.getGameHeight()*3));
     }
 
 
@@ -111,7 +111,7 @@ public class HowToState implements GameState {
     int _gameHeight = 1920;
     int ballVel = 450;
     double _fUpdateTimer=0;
-    double _fixedUpdateDelay = 0.002;
+    double _fixedUpdateDelay = 0.02;
     GameObject _backgroundOb;
     GameObject _flechas1;
     GameObject _flechas2;
