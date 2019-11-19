@@ -9,21 +9,17 @@ public class Graphics extends com.engine.AbstractGraphics{
 
     public Graphics(JFrame window, int gameWidth, int gameHeight){
         _window=window;
-
-        window.setIgnoreRepaint((true));
-        window.setVisible(true);
         _gameWidth = gameWidth;
         _gameHeight = gameHeight;
 
     }
 
 
-    //Estos métodos adicionales los usará DesktopGame
-    public void setGraphics(java.awt.Graphics p)
-    {
-        _graphics=p;
-    }
 
+    /**
+     * Limpia la pantalla pintándola con el color indicado
+     * @param color valor del color a pintar
+     */
     @Override
 	public void clear(int color){
         //Rellenándola con el color recibido
@@ -32,15 +28,30 @@ public class Graphics extends com.engine.AbstractGraphics{
 
 	}
 
+    /** Devuelve la anchura de la ventana
+     * @return anchura de la ventana
+     */
     @Override
     public int getWidth(){
         return _window.getWidth();
-        };
+        }
+
+    /** Devuelve la altura de la ventana
+     * @return altura de la ventana
+     */
     @Override
     public int getHeight(){
         return _window.getHeight();
     }
 
+    /**
+     * Método propio de cada plataforma para pintar una imagen con las coordenadas de la pantalla
+     *
+     * @param image imagen a pintar
+     * @param source Rect de la imagen fuente a pintar
+     * @param dest Rect con las dimensiones donde se pintará la imagen
+     * @param alpha valor de transparencia de la imagen entre 0 y 255
+     */
     @Override
     protected void drawImagePrivate(Image image, Rect source, Rect dest, int alpha) {
 
@@ -54,13 +65,23 @@ public class Graphics extends com.engine.AbstractGraphics{
         else _graphics.drawImage(((com.engine.desktopengine.Image)image).getAwtImage(), dest.x, dest.y, dest.x+dest.w, dest.y+dest.h, source.x,source.y, source.x + source.w,source.y + source.h, null);
     }
 
+    /**
+     * Método propio de cada plataforma que dibuja un rectángulo con el color indicado en las coordenadas
+     * de la pantalla
+     * @param dest Rect donde se pintará el rectángulo
+     * @param color Valor del color del rectángulo
+     */
     @Override
     protected void drawRectPrivate(Rect dest, int color) {
-        System.out.println(dest.x + " " + dest.y + " " +  (dest.w) + " " +  (dest.h));
         _graphics.setColor(new Color(color));
         _graphics.fillRect(dest.x, dest.y, dest.w, dest.h);
     }
 
+    /**
+     * Genera un Image dada una ruta con el nombre de la imagen
+     * @param name nombre del archivo
+     * @return image
+     */
     @Override
     public Image newImage(String name){
         try {
@@ -76,8 +97,14 @@ public class Graphics extends com.engine.AbstractGraphics{
         }
     }
 
+    //Métodos auxiliares que necesitara el desktopengine
+
+    public void setGraphics(java.awt.Graphics p)
+    {
+        _graphics=p;
+    }
+
     protected java.awt.Graphics _graphics;
     protected JFrame _window;
-    java.awt.image.BufferStrategy _strategy;
 
 }//Graphics

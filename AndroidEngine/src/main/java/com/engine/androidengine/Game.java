@@ -20,12 +20,19 @@ public class Game implements com.engine.Game, Runnable {
 
     }
 
+    /**
+     * Asigna el GameState que se va a ejecutar
+     * @param gameState a ejecutar
+     */
     @Override
     public void setGameState(GameState gameState) {
         _gameState = gameState;
         _gameState.init();
     }
 
+    /**
+     * Ejecuta el bucle principal del gameState asignado
+     */
     @Override
     public void runGame() {
 
@@ -61,7 +68,10 @@ public class Game implements com.engine.Game, Runnable {
 	}
 
 
-
+    /**
+     * Método implementado de Runnable que ejecuta el bucle principal de android, este llama
+     * al runGame
+     */
     @Override
     public void run() {
 

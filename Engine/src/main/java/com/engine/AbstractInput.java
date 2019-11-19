@@ -4,6 +4,10 @@ import java.util.List;
 
 public abstract class AbstractInput implements Input {
 
+    /**
+     * Devuelve la lista de eventos recibidos desde
+     * la última invocación al método
+     */
     @Override
     synchronized public List<TouchEvent> getTouchEvents(){
         //Crear una lista nueva con el contenido de _list;
@@ -14,6 +18,11 @@ public abstract class AbstractInput implements Input {
         return auxList;
     }
 
+    /**
+     * Pasa de coordenadas de la ventana a coordenadas lógicas de juego y
+     * añade el evento a la cola de eventos
+     * @param e evento que añadir a la cola
+     */
     synchronized protected void addEvent (TouchEvent e) {
         //Pasar de coordenadas de la pantalla a coordenadas del juego
         TouchEvent auxEvent = new TouchEvent();
@@ -44,6 +53,7 @@ public abstract class AbstractInput implements Input {
         auxEvent.x = (int)((e.x - (int)xOffset)/ratio);
         auxEvent.y = (int)((e.y - (int)yOffset)/ratio);
 
+        //Añade el evento auxiliar
         synchronized (this) {
             _list.add(auxEvent);
         }

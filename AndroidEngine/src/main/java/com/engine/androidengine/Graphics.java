@@ -13,6 +13,8 @@ import java.io.InputStream;
 import com.engine.Rect;
 
 public class Graphics extends com.engine.AbstractGraphics{
+
+
     public Graphics(SurfaceView surfaceView, AssetManager assetManager, int gameWidth, int gameHeight){
         _surfaceView = surfaceView;
         _assetManager = assetManager;
@@ -20,23 +22,40 @@ public class Graphics extends com.engine.AbstractGraphics{
         _gameHeight = gameHeight;
 
     }
+
+    /**
+     * Limpia la pantalla pintándola con el color indicado
+     * @param color valor del color a pintar
+     */
+    @Override
+    public void clear(int color){
+        _canvas.drawColor(color);
+    }
+    /** Devuelve la anchura de la ventana
+     * @return anchura de la ventana
+     */
     @Override
     public int getWidth() {
         return _surfaceView.getWidth();
     }
-	
-	public void clear(int color){
-        //Limpia la pantalla pintándola de un color
-        _canvas.drawColor(color);
 
 
-	}
-
+    /** Devuelve la altura de la ventana
+     * @return altura de la ventana
+     */
     @Override
     public int getHeight() {
         return _surfaceView.getHeight();
     }
 
+    /**
+     * Método propio de cada plataforma para pintar una imagen con las coordenadas de la pantalla
+     *
+     * @param image imagen a pintar
+     * @param source Rect de la imagen fuente a pintar
+     * @param dest Rect con las dimensiones donde se pintará la imagen
+     * @param alpha valor de transparencia de la imagen entre 0 y 255
+     */
     @Override
     protected void drawImagePrivate(com.engine.Image image, Rect source, Rect dest, int alpha) {
 
@@ -56,6 +75,12 @@ public class Graphics extends com.engine.AbstractGraphics{
 
     }
 
+    /**
+     * Método propio de cada plataforma que dibuja un rectángulo con el color indicado en las coordenadas
+     * de la pantalla
+     * @param dest Rect donde se pintará el rectángulo
+     * @param color Valor del color del rectángulo
+     */
     @Override
     protected void drawRectPrivate(Rect dest, int color) {
         android.graphics.Rect dst = new android.graphics.Rect(dest.x, dest.y, dest.w, dest.h);
@@ -64,13 +89,18 @@ public class Graphics extends com.engine.AbstractGraphics{
         _canvas.drawRect(dst,paint);
     }
 
+    /**
+     * Genera un Image dada una ruta con el nombre de la imagen
+     * @param name nombre del archivo
+     * @return image
+     */
     @Override
     public Image newImage(String name){
-
-
         InputStream inputStream = null;
         Image image = null;
+
         try {
+            //Intenta crear una imagen abriéndola del assetManager
             inputStream = _assetManager.open(name);
             Bitmap _sprite = BitmapFactory.decodeStream(inputStream);
             image = new Image(_sprite);
@@ -80,15 +110,12 @@ public class Graphics extends com.engine.AbstractGraphics{
             android.util.Log.e("MainActivity", "Error leyendo el sprite");
         }
         finally {
-            // Haya pasado lo que haya pasado, cerramos el stream.
+            // Cerramos el stream.
             if (inputStream != null) {
                 try {
                     inputStream.close();
                 }
                 catch(Exception e) {
-                    // Esto no debería ocurrir nunca... y si ocurre, el
-                    // usuario tampoco tiene mucho de qué preocuparse,
-                    // ¿para qué molestarle?
                 }
                 return image;
             } // if (inputStream != null)
@@ -102,5 +129,4 @@ public class Graphics extends com.engine.AbstractGraphics{
     protected  AssetManager _assetManager;
     protected Canvas _canvas;
 
-//protected (tipo de Graphics de android) _graphics
 }

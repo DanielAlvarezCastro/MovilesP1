@@ -12,6 +12,14 @@ public class Input extends com.engine.AbstractInput implements View.OnTouchListe
 	public Input(Game game){
 		_game = game;
 	}
+
+	/**
+	 * Cuando Android detecta una pulsación procesa la información del evento
+	 * y lo añade a la cola de eventos de input
+	 * @param v vista donde se ha detectado el input
+	 * @param event información del evento procesado
+	 * @return devuelve true cuando añade el evento a la cola
+	 */
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 
@@ -30,6 +38,6 @@ public class Input extends com.engine.AbstractInput implements View.OnTouchListe
 		e.x = (int)event.getX(0);
 		e.y = (int)event.getY(0);
 		addEvent(e);
-		return false;
+		return true;
 	}
 }

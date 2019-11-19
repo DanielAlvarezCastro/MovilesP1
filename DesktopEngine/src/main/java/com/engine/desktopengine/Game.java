@@ -13,16 +13,25 @@ public class Game implements com.engine.Game{
         JFrame window = new JFrame();
         window.setSize(screenWidth,screenHeight);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setIgnoreRepaint((true));
+        window.setVisible(true);
+        window.createBufferStrategy(2);
 
+        // Obtenemos el Buffer Strategy que acaba de crearse.
+        _strategy = window.getBufferStrategy();
+
+        //Crea un Graphics
         _graphics = new Graphics(window, _gameWidth, _gameHeight);
 
-        window.createBufferStrategy(2);
-        // Obtenemos el Buffer Strategy que se supone acaba de crearse.
-        _strategy = window.getBufferStrategy();
+        //Crea un nuevo MouseListener y lo añade a la ventana
         _input = new Input(this);
         window.addMouseListener(_input);
 
     }
+    /**
+     * Asigna el GameState que se va a ejecutar
+     * @param gameState a ejecutar
+     */
     @Override
     public void setGameState(GameState gameState) {
         _gameState = gameState;
@@ -30,6 +39,9 @@ public class Game implements com.engine.Game{
 
     }
 
+    /**
+     * Ejecuta el bucle principal del gameState asignado
+     */
     @Override
     public void runGame() {
         //Llama al init del gamestate
@@ -75,11 +87,19 @@ public class Game implements com.engine.Game{
 		return _input;
 	}
 
+    /**
+     * Devuelve la anchura del juego
+     * @return anchura del juego
+     */
     @Override
     public int getGameWidth() {
         return _gameWidth;
     }
 
+    /**
+     * Devuelve la altura del juego
+     * @return altura del juego
+     */
     @Override
     public int getGameHeight() {
         return _gameHeight;

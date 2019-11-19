@@ -1,23 +1,33 @@
 package com.engine;
 
 public abstract class AbstractGraphics implements Graphics {
-    //Recibe coordenadas lógicas del canvas juego y las transforma en coordenadas de la pantalla
-    Image _image;
 
-
-    public Image newImage(String name){
-        return _image;
-    };
-    public abstract int getWidth();
-    public abstract int getHeight();
     /**
-     * Dibuja completamente la imagen image en la posición x,y
-     * de la pantalla. Mapea cada de la imagen en
-     * un pixel de pantalla
-     * @param image Imagen a pintar
-     * @param x Posición x en la pantalla
-     * @param y Posición y en la pantalla
+     * Genera un Image dada una ruta con el nombre de la imagen
+     * @param name nombre del archivo
+     * @return image
      */
+    public abstract Image newImage(String name);
+
+    /**
+     * Limpia la pantalla pintándola con el color indicado
+     * @param color valor del color a pintar
+     */
+    public abstract void clear(int color);
+
+
+
+    /** Devuelve la anchura de la ventana
+     * @return anchura de la ventana
+     */
+    public abstract int getWidth();
+
+    /** Devuelve la altura de la ventana
+     * @return altura de la ventana
+     */
+    public abstract int getHeight();
+
+    /*
     public void drawImage(Image image, int x, int y){
         //Pasar de cóordenadas juego a coordenadas de pantalla y dibujar
         Rect source = new Rect(0, 0, image.getWidth(), image.getHeight());
@@ -34,6 +44,15 @@ public abstract class AbstractGraphics implements Graphics {
         //Pasar de cóordenadas lógicas a coordenadas de pantalla y dibujar
         drawImagePrivate(image, source, dest, 255);
     }
+    */
+    /**
+     * Dibuja el cuadrado definido por source la imagen en el segmento indicado por source.
+     * Mapea directamente los píxeles de la lógica del juego en píxeles de la pantalla
+     * @param image Imagen a pintar
+     * @param source Rect de la imagen fuente a pintar
+     * @param dest Rect con las dimensiones donde se pintará la imagen
+     * @param alpha valor de transparencia de la imagen entre 0 y 255
+     */
     public void drawImage(Image image, Rect source, Rect dest, int alpha){
 
         //ratio entre las anchuras
@@ -75,7 +94,22 @@ public abstract class AbstractGraphics implements Graphics {
 
     }
 
+    /**
+     * Método propio de cada plataforma para pintar una imagen con las coordenadas de la pantalla
+     *
+     * @param image imagen a pintar
+     * @param source Rect de la imagen fuente a pintar
+     * @param dest Rect con las dimensiones donde se pintará la imagen
+     * @param alpha valor de transparencia de la imagen entre 0 y 255
+     */
     protected abstract void drawImagePrivate(Image image, Rect source, Rect dest, int alpha);
+
+    /**
+     * Método propio de cada plataforma que dibuja un rectángulo con el color indicado en las coordenadas
+     * de la pantalla
+     * @param dest Rect donde se pintará el rectángulo
+     * @param color Valor del color del rectángulo
+     */
     protected abstract void drawRectPrivate(Rect dest, int color);
 
     protected int _gameWidth;

@@ -28,12 +28,13 @@ public class Sprite{
         _source=rect;
         _alpha = alpha;
     }
-
+    /*
     public void draw(Graphics g, int x, int y){
 
         g.drawImage(_image, _source,x,y);
 
     }
+    */
     //Devuelve alpha
     public int getAlpha(){
         return _alpha;

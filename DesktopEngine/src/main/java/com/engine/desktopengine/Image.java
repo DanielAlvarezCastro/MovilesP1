@@ -1,9 +1,8 @@
 package com.engine.desktopengine;
 //import com.example.engine.Image;
 /**
- * implementa la interfaz Image
+ * implementa en PC la interfaz Image
  */
-
 public class Image implements com.engine.Image{
 
     public Image(java.awt.Image image){
@@ -11,15 +10,17 @@ public class Image implements com.engine.Image{
         }
 
     /**
-     * Devuelve el ancho de la imagen.
-     *
+     * Devuelve el ancho de la imagen.     *
      * @return Ancho de la imagen.
      */
-
     @Override
     public int getWidth(){
         return _image.getWidth(null);
     };
+    /**
+     * Devuelve la altura de la imagen.     *
+     * @return altura de la imagen.
+     */
     @Override
     public int getHeight(){
         return _image.getHeight(null);

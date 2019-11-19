@@ -19,7 +19,6 @@ public interface Input{
         drag
 	}
 
-	//La clase no guarda nada de la plataforma
 	class TouchEvent {
 		public EventType type;
 		public int x;
