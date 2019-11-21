@@ -135,8 +135,8 @@ public class GameOverState implements GameState {
         _flechas1.setY(_flechas1.getY() + _game.getGameHeight()/500);
         _flechas2.setY(_flechas2.getY() + _game.getGameHeight()/500);
 
-        if(_flechas1.getY()>_game.getGameHeight())_flechas1.setY((-_game.getGameHeight()*3)+1);
-        if(_flechas2.getY()>_game.getGameHeight())_flechas2.setY((-_game.getGameHeight()*3));
+        if(_flechas1.getY()>_game.getGameHeight())_flechas1.setY((_flechas2.getY()-_game.getGameHeight()*2)-1);
+        if(_flechas2.getY()>_game.getGameHeight())_flechas2.setY((_flechas1.getY()-_game.getGameHeight()*2)-1);
     }
 
 

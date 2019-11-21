@@ -56,13 +56,15 @@ public class PlayState implements GameState {
         //Init balls
         for(int i=0; i < nBalls; i++){
             Ball b = new Ball();
-            b.gameObject = new GameObject("ball"+i,new Sprite(graphics.newImage("Sprites/balls.png"),
-                    new Rect(0,128,128,128)),(_game.getGameWidth()/2)-50 , -500, 100, 100);
+                b.gameObject = new GameObject("ball" + i, new Sprite(graphics.newImage("Sprites/balls.png"),
+                        new Rect(0, 128, 128, 128)), (_game.getGameWidth() / 2) - 50, -500, 100, 100);
             b.gameObject.setActive(false);
             b.color=false;
             balls[i]=b;
             gameObjects.add(balls[i].gameObject);
         }
+        throwBall(true);
+        throwBall(false);
 
     }
 
@@ -81,16 +83,17 @@ public class PlayState implements GameState {
 
     @Override
     public void update(double deltaTime) {
-        double incr = ballVel*deltaTime;
         _speedTimer+=deltaTime;
-        if(_speedTimer > 2 && _fixedUpdateDelay > 0.002) {
+        if(_speedTimer > 2 && _speedDelta < 5) {
             _speedTimer =0;
-            _fixedUpdateDelay -=0.0005;
-            System.out.println(_fixedUpdateDelay);
+            _speedDelta +=0.10;
         }
-        _fUpdateTimer+=deltaTime;
+        double dt;
+        if(deltaTime < 0.03) dt= 0.03;
+        else dt=deltaTime;
+        animateArrows(dt);
+        updateBalls(dt);
         _ballTimer+=deltaTime;
-        if(_fUpdateTimer>=_fixedUpdateDelay) fixedUpdate(deltaTime);
         handleInput();
     }
 
@@ -103,25 +106,19 @@ public class PlayState implements GameState {
         }
     }
 
-    public void fixedUpdate(double deltaTime){
-        _fUpdateTimer-=_fixedUpdateDelay;
-
-        animateArrows(deltaTime);
-        updateBalls();
-        if(_ballTimer >= _fixedUpdateDelay*100){
-            throwBall();
-        }
-    }
-
-    public  void updateBalls(){
+    public  void updateBalls(double deltaTime){
         for (int i =0; i<nBalls; i++){
             if(balls[i].gameObject.getActive())
             {
-                balls[i].gameObject.setY(balls[i].gameObject.getY()+_game.getGameHeight()/300);
+                balls[i].gameObject.setY( (int) (balls[i].gameObject.getY()+_game.getGameHeight()/(int)(deltaTime*Math.pow(10,4))*_speedDelta));
+                System.out.println(balls[i].gameObject.getY());
                 if(balls[i].gameObject.getY() > ((_game.getGameHeight()/3)*2)-100){
                     balls[i].gameObject.setActive(false);
                     if(balls[i].color != _actualColor) _game.setGameState(new GameOverState(_game, _points));
-                    else addPoint();
+                    else {
+                        addPoint();
+                        throwBall(false);
+                    }
                 }
             }
         }
@@ -170,7 +167,7 @@ public class PlayState implements GameState {
         }
     }
 
-    public void throwBall()
+    public void throwBall(boolean first)
     {
         _ballTimer=0;
         int i=0;
@@ -178,7 +175,8 @@ public class PlayState implements GameState {
             i++;
         }
         balls[i].gameObject.setActive(true);
-        balls[i].gameObject.setY(-100);
+        if(first) balls[i].gameObject.setY(-(_player.getY()/2)-100);
+        else balls[i].gameObject.setY(-100);
         Random rnd = new Random();
         int r = rnd.nextInt((1 - 0) + 1);
         if(r==0){
@@ -193,11 +191,12 @@ public class PlayState implements GameState {
     }
 
     public void animateArrows(double deltaTime){
-        _flechas1.setY(_flechas1.getY() + _game.getGameHeight()/500);
-        _flechas2.setY(_flechas2.getY() + _game.getGameHeight()/500);
+        int y =(int) (_game.getGameHeight()/(int)(deltaTime*Math.pow(10,4))*_speedDelta);
+        _flechas1.setY(_flechas1.getY()+y);
+        _flechas2.setY(_flechas2.getY()+y);
 
-        if(_flechas1.getY()>_game.getGameHeight())_flechas1.setY((-_game.getGameHeight()*3)+1);
-        if(_flechas2.getY()>_game.getGameHeight())_flechas2.setY((-_game.getGameHeight()*3));
+        if(_flechas1.getY()>_game.getGameHeight())_flechas1.setY((_flechas2.getY()-_game.getGameHeight()*2)-1);
+        if(_flechas2.getY()>_game.getGameHeight())_flechas2.setY((_flechas1.getY()-_game.getGameHeight()*2)-1);
     }
 
 
@@ -216,9 +215,8 @@ public class PlayState implements GameState {
     public int GetGameHeight(){ return _gameHeight;}
     int _gameWidth = 1080;
     int _gameHeight = 1920;
-    int ballVel = 450;
-    double _fUpdateTimer=0;
     double _speedTimer =0;
+    double _speedDelta=1;
     double _fixedUpdateDelay = 0.02;
     GameObject _flechas1;
     GameObject _flechas2;
@@ -231,7 +229,7 @@ public class PlayState implements GameState {
     int _rndColor;
     Ball[] balls;
     double _ballTimer;
-    int nBalls = 12;
+    int nBalls = 2;
     int _points =-1;
     List<GameObject> _pointsGo;
     List<GameObject> gameObjects;
