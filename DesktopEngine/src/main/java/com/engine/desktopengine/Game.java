@@ -8,7 +8,9 @@ import javax.swing.JFrame;
 
 public class Game implements com.engine.Game{
 
-    public Game(){
+    public Game(int gameWidth, int gameHeight, int screenWidth, int screenHeight){
+        _gameHeight=gameHeight;
+        _gameWidth=gameWidth;
         //Crea la ventana
         JFrame window = new JFrame();
         window.setSize(screenWidth,screenHeight);
@@ -110,10 +112,6 @@ public class Game implements com.engine.Game{
     Input _input;
     BufferStrategy _strategy;
 
-    //TODO : Pasarle estas constantes de otra forma
-    int screenWidth = 540;
-    int screenHeight = 960;
-
-    int _gameWidth = 1080;
-    int _gameHeight = 1920;
+    int _gameWidth ;
+    int _gameHeight ;
 }

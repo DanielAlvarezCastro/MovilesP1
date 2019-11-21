@@ -11,7 +11,9 @@ import com.engine.GameState;
 
 public class Game implements com.engine.Game, Runnable {
 
-    public Game(AssetManager assetManager, SurfaceView surfaceView){
+    public Game(AssetManager assetManager, SurfaceView surfaceView, int gameWidth, int gameHeight){
+        _gameWidth=gameWidth;
+        _gameHeight = gameHeight;
         _surfaceView = surfaceView;
         _graphics = new Graphics(surfaceView, assetManager, _gameWidth, _gameHeight);
         _holder = surfaceView.getHolder();
@@ -152,11 +154,7 @@ public class Game implements com.engine.Game, Runnable {
     SurfaceHolder _holder;
     boolean _running;
 
-    //TODO : Pasarle estas constantes de otra forma
-    int screenWidth = 540;
-    int screenHeight = 960;
-
-    int _gameWidth = 1080;
-    int _gameHeight = 1920;
+    int _gameWidth;
+    int _gameHeight;
 
 }//class Game

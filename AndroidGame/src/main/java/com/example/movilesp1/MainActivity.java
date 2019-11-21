@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         SurfaceView surfaceView = new SurfaceView(this);
         setContentView(surfaceView);
-        _androidGame = new Game(getAssets(), surfaceView);
+        _androidGame = new Game(getAssets(), surfaceView, 1080, 1920);
         MenuState gameLogic = new MenuState(_androidGame);
         _androidGame.setGameState(gameLogic);
 
