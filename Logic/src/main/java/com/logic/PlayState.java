@@ -88,11 +88,8 @@ public class PlayState implements GameState {
             _speedTimer =0;
             _speedDelta +=0.10;
         }
-        double dt;
-        if(deltaTime < 0.03) dt= 0.03;
-        else dt=deltaTime;
-        animateArrows(dt);
-        updateBalls(dt);
+        animateArrows(deltaTime);
+        updateBalls(deltaTime);
         _ballTimer+=deltaTime;
         handleInput();
     }
@@ -110,8 +107,7 @@ public class PlayState implements GameState {
         for (int i =0; i<nBalls; i++){
             if(balls[i].gameObject.getActive())
             {
-                balls[i].gameObject.setY( (int) (balls[i].gameObject.getY()+_game.getGameHeight()/(int)(deltaTime*Math.pow(10,4))*_speedDelta));
-                System.out.println(balls[i].gameObject.getY());
+                balls[i].gameObject.setY(balls[i].gameObject.getY()+(150*deltaTime*_speedDelta));
                 if(balls[i].gameObject.getY() > ((_game.getGameHeight()/3)*2)-100){
                     balls[i].gameObject.setActive(false);
                     if(balls[i].color != _actualColor) _game.setGameState(new GameOverState(_game, _points));
@@ -191,17 +187,17 @@ public class PlayState implements GameState {
     }
 
     public void animateArrows(double deltaTime){
-        int y =(int) (_game.getGameHeight()/(int)(deltaTime*Math.pow(10,4))*_speedDelta);
-        _flechas1.setY(_flechas1.getY()+y);
-        _flechas2.setY(_flechas2.getY()+y);
+            double y =(150*deltaTime)*_speedDelta;
+            _flechas1.setY(_flechas1.getY()+y);
+            _flechas2.setY(_flechas2.getY()+y);
 
-        if(_flechas1.getY()>_game.getGameHeight())_flechas1.setY((_flechas2.getY()-_game.getGameHeight()*2)-1);
-        if(_flechas2.getY()>_game.getGameHeight())_flechas2.setY((_flechas1.getY()-_game.getGameHeight()*2)-1);
+            if(_flechas1.getY()>_game.getGameHeight())_flechas1.setY((_flechas2.getY()-_game.getGameHeight()*2)-1);
+            if(_flechas2.getY()>_game.getGameHeight())_flechas2.setY((_flechas1.getY()-_game.getGameHeight()*2)-1);
     }
 
 
     @Override
-    public void render(double deltaTime) {
+    public void render() {
 
         _game.getGraphics().clear(_colors[_rndColor]);
 
@@ -217,13 +213,11 @@ public class PlayState implements GameState {
     int _gameHeight = 1920;
     double _speedTimer =0;
     double _speedDelta=1;
-    double _fixedUpdateDelay = 0.02;
     GameObject _flechas1;
     GameObject _flechas2;
     GameObject _backgroundOb;
     GameObject _player;
     boolean _actualColor;
-    boolean _tapAnimUp;
     int[] _colors = { 0xFF41a85f, 0xFF00a885, 0xFF3d8eb9, 0xFF2969b0, 0xFF553982, 0xFF28324e, 0xFFf37934,
             0xFFd14b41, 0xFF75706b};
     int _rndColor;

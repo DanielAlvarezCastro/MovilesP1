@@ -59,10 +59,12 @@ public class Graphics extends com.engine.AbstractGraphics{
             float newAlpha = alpha/255.0f;
             Graphics2D g2d = (Graphics2D) _graphics.create();
             g2d.setComposite(AlphaComposite.SrcOver.derive(newAlpha));
-            g2d.drawImage(((com.engine.desktopengine.Image)image).getAwtImage(), dest.x, dest.y, dest.x+dest.w, dest.y+dest.h, source.x,source.y, source.x + source.w,source.y + source.h, null);
+            g2d.drawImage(((com.engine.desktopengine.Image)image).getAwtImage(), (int)(dest.x), (int)(dest.y), (int)(dest.x)+dest.w,
+                    (int)(dest.y)+dest.h, (int)(source.x),(int)(source.y), (int)(source.x) + source.w,(int) (source.y) + source.h, null);
             g2d.dispose();
         }
-        else _graphics.drawImage(((com.engine.desktopengine.Image)image).getAwtImage(), dest.x, dest.y, dest.x+dest.w, dest.y+dest.h, source.x,source.y, source.x + source.w,source.y + source.h, null);
+        else _graphics.drawImage(((com.engine.desktopengine.Image)image).getAwtImage(), (int)(dest.x), (int)(dest.y), (int)(dest.x)+dest.w, (int)(dest.y)+dest.h,
+                (int)(source.x),(int)(source.y), (int)(source.x) + source.w,(int)(source.y) + source.h, null);
     }
 
     /**
@@ -74,7 +76,7 @@ public class Graphics extends com.engine.AbstractGraphics{
     @Override
     protected void drawRectPrivate(Rect dest, int color) {
         _graphics.setColor(new Color(color));
-        _graphics.fillRect(dest.x, dest.y, dest.w, dest.h);
+        _graphics.fillRect((int)dest.x, (int)dest.y, dest.w, dest.h);
     }
 
     /**

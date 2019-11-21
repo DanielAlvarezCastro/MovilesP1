@@ -63,7 +63,7 @@ public class Game implements com.engine.Game{
                     _graphics.setGraphics(graphics);
                     try {
 
-                        _gameState.render(deltaTime);
+                        _gameState.render();
                     }
                     finally {
                         graphics.dispose();

@@ -59,9 +59,9 @@ public class Graphics extends com.engine.AbstractGraphics{
     @Override
     protected void drawImagePrivate(com.engine.Image image, Rect source, Rect dest, int alpha) {
 
-        android.graphics.Rect src = new android.graphics.Rect(source.x, source.y, source.x + source.w, source.y+source.h);
+        android.graphics.Rect src = new android.graphics.Rect((int) (source.x), (int) (source.y), (int)(source.x) + source.w, (int)(source.y)+source.h);
 
-        android.graphics.Rect dst = new android.graphics.Rect(dest.x, dest.y, dest.x + dest.w, dest.y+dest.h);
+        android.graphics.Rect dst = new android.graphics.Rect((int) (dest.x), (int) (dest.y), (int)(dest.x) + dest.w, (int)(dest.y)+dest.h);
 
         //Solo intenta pintar con alpha si el valor es menor que el máximo
         if(alpha!=255) {
@@ -83,7 +83,7 @@ public class Graphics extends com.engine.AbstractGraphics{
      */
     @Override
     protected void drawRectPrivate(Rect dest, int color) {
-        android.graphics.Rect dst = new android.graphics.Rect(dest.x, dest.y, dest.w, dest.h);
+        android.graphics.Rect dst = new android.graphics.Rect((int)(dest.x), (int)(dest.y), dest.w, dest.h);
         Paint paint = new Paint();
         paint.setColor(color);
         _canvas.drawRect(dst,paint);

@@ -6,14 +6,14 @@ import com.engine.Sprite;
 
 public class GameObject {
 
-    public GameObject(String name, Sprite sprite, int x, int y, int w, int h){
+    public GameObject(String name, Sprite sprite, double x, double y, int w, int h){
         _name=name;
         _sprite=sprite;
         _dest = new Rect(x, y, w, h);
         _active = true;
     }
 
-    public GameObject(String name, Sprite sprite, int x, int y){
+    public GameObject(String name, Sprite sprite, double x, double y){
         _name=name;
         _sprite=sprite;
         _dest = new Rect(x, y, _sprite.getWidth(), _sprite.getHeight());
@@ -35,16 +35,16 @@ public class GameObject {
     }
     public void setActive(boolean active){_active = active;}
     public boolean getActive(){return _active;}
-    public int getX(){
+    public double getX(){
         return  _dest.x;
     }
-    public int getY(){
+    public double getY(){
         return _dest.y;
     }
-    public void setX(int x){
+    public void setX(double x){
         _dest.x=x;
     }
-    public void setY(int y){
+    public void setY(double y){
         _dest.y=y;
     }
     public void setW(int w){

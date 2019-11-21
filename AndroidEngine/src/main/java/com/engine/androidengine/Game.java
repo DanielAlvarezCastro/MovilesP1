@@ -52,7 +52,7 @@ public class Game implements com.engine.Game, Runnable {
 
             Canvas canvas = _holder.lockCanvas();
             _graphics.setCanvas(canvas);
-            _gameState.render(deltaTime);
+            _gameState.render();
             _holder.unlockCanvasAndPost(canvas);
         }
     }

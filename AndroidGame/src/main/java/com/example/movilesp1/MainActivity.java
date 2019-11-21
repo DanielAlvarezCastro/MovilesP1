@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.SurfaceView;
 
 import com.engine.androidengine.Game;
-import com.logic.GameLogic;
 import com.logic.MenuState;
 
 public class MainActivity extends AppCompatActivity {

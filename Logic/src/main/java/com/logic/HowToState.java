@@ -55,27 +55,23 @@ public class HowToState implements GameState {
 
     @Override
     public void update(double deltaTime) {
-        double incr = ballVel*deltaTime;
         _fUpdateTimer+=deltaTime;
-        if(_fUpdateTimer>=_fixedUpdateDelay) fixedUpdate(deltaTime);
+        if(_fUpdateTimer>=_fixedUpdateDelay) animateTap();
+        handleInput();
+        animateArrows(deltaTime);
+    }
+    public void handleInput(){
         List<Input.TouchEvent> events = _game.getInput().getTouchEvents();
         for (Input.TouchEvent event : events) {
             if(event.type == Input.EventType.clicked){
-                if(event.type == Input.EventType.clicked){
-                    if(_cancelButton.within(event.x, event.y))_game.setGameState(new MenuState(_game));
-                    else if(_backgroundOb.within(event.x, event.y))_game.setGameState(new PlayState(_game));
-                }
+                if(_cancelButton.within(event.x, event.y))_game.setGameState(new MenuState(_game));
+                else if(_backgroundOb.within(event.x, event.y))_game.setGameState(new PlayState(_game));
             }
         }
     }
 
-    public void fixedUpdate(double deltaTime){
+    public void animateTap(){
         _fUpdateTimer-=_fixedUpdateDelay;
-        animateArrows(deltaTime);
-        animateTap(deltaTime);
-    }
-
-    public void animateTap(double deltaTime){
         if(_tapAnimUp) {
             tapSprite.getSprite().setAlpha(tapSprite.getSprite().getAlpha()+5);//Bajar alfa
             if(tapSprite.getSprite().getAlpha() >= 255) _tapAnimUp=false;
@@ -86,8 +82,9 @@ public class HowToState implements GameState {
         }
     }
     public void animateArrows(double deltaTime){
-        _flechas1.setY(_flechas1.getY() + _game.getGameHeight()/500);
-        _flechas2.setY(_flechas2.getY() + _game.getGameHeight()/500);
+        double y =(150*deltaTime);
+        _flechas1.setY(_flechas1.getY()+y);
+        _flechas2.setY(_flechas2.getY()+y);
 
         if(_flechas1.getY()>_game.getGameHeight())_flechas1.setY((_flechas2.getY()-_game.getGameHeight()*2)-1);
         if(_flechas2.getY()>_game.getGameHeight())_flechas2.setY((_flechas1.getY()-_game.getGameHeight()*2)-1);
@@ -95,7 +92,7 @@ public class HowToState implements GameState {
 
 
     @Override
-    public void render(double deltaTime) {
+    public void render() {
 
         _game.getGraphics().clear(_colors[_rndColor]);
 
