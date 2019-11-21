@@ -50,7 +50,7 @@ public class Game implements com.engine.Game, Runnable {
             //Pintamos el frame
             while(!_holder.getSurface().isValid());
 
-            Canvas canvas = _holder.lockCanvas();
+            Canvas canvas = _holder.lockHardwareCanvas();
             _graphics.setCanvas(canvas);
             _gameState.render();
             _holder.unlockCanvasAndPost(canvas);
