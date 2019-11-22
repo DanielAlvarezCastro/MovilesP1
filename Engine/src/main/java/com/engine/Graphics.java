@@ -7,20 +7,18 @@ public interface Graphics{
      * @param name nombre del archivo
      * @return image
      */
+
     Image newImage(String name);
     /** Devuelve la anchura de la ventana
      * @return anchura de la ventana
      */
+
     int getWidth();
     /** Devuelve la altura de la ventana
      * @return altura de la ventana
      */
     int getHeight();
-    /*
-    void drawImage(Image image, int x, int y);
-    void drawImage(Image image, Rect source, int x, int y);
-    void drawImage(Image image, Rect source, Rect dest);
-    */
+
     /**
      * Dibuja el cuadrado definido por source la imagen en el segmento indicado por source.
      * Mapea directamente los píxeles de la lógica del juego en píxeles de la pantalla

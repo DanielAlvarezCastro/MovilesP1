@@ -27,24 +27,6 @@ public abstract class AbstractGraphics implements Graphics {
      */
     public abstract int getHeight();
 
-    /*
-    public void drawImage(Image image, int x, int y){
-        //Pasar de cóordenadas juego a coordenadas de pantalla y dibujar
-        Rect source = new Rect(0, 0, image.getWidth(), image.getHeight());
-        Rect dest = new Rect(x, y, image.getWidth(), image.getHeight());
-        drawImagePrivate(image, source, dest, 255);
-    }
-    public void drawImage(Image image, Rect source, int x, int y){
-        //Pasar de cóordenadas lógicas a coordenadas de pantalla y dibujar
-        Rect dest = new Rect(x, y, image.getWidth(), image.getHeight());
-        drawImagePrivate(image, source, dest, 255);
-    }
-
-    public void drawImage(Image image, Rect source, Rect dest){
-        //Pasar de cóordenadas lógicas a coordenadas de pantalla y dibujar
-        drawImagePrivate(image, source, dest, 255);
-    }
-    */
     /**
      * Dibuja el cuadrado definido por source la imagen en el segmento indicado por source.
      * Mapea directamente los píxeles de la lógica del juego en píxeles de la pantalla
