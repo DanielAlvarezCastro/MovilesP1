@@ -9,7 +9,6 @@ import com.engine.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import java.util.Random;
 
 public class GameOverState implements GameState {
@@ -19,70 +18,75 @@ public class GameOverState implements GameState {
         _points = points;
     }
 
+    //Inicializacion de los objetos de la scena
     @Override
     public void init() {
 
         Random r = new Random();
         _rndColor = r.nextInt((8 - 0) + 1);
         Graphics graphics = _game.getGraphics();
-        int screenWidth = _game.getGameWidth();
-        int screenHeight = _game.getGameHeight();
+
+        //Objetos del fondo
         _backgroundOb = new GameObject("background",new Sprite(graphics.newImage("Sprites/backgrounds.png"),
-                new Rect(32*_rndColor,0,32,32)),screenWidth/6 , 0, (screenWidth/3)*2, screenHeight*2);
+                new Rect(32*_rndColor,0,32,32)),GetGameWidth()/6 , 0, (GetGameWidth()/3)*2, GetGameHeight()*2);
         gameObjects.add(_backgroundOb);
         _flechas1 = new GameObject("arrows1",new Sprite(graphics.newImage("Sprites/arrowsBackground.png"),100),
-                screenWidth/6 , 0, (screenWidth/3)*2, screenHeight*2);
+                GetGameWidth()/6 , 0, (GetGameWidth()/3)*2, GetGameHeight()*2);
         _flechas2 = new GameObject("arrows2",new Sprite(graphics.newImage("Sprites/arrowsBackground.png"),100),
-                screenWidth/6 , (-screenHeight*2)-1, (screenWidth/3)*2, screenHeight*2);
+                GetGameWidth()/6 , (-GetGameHeight()*2)-2, (GetGameWidth()/3)*2, GetGameHeight()*2);
 
+        //Logo e interfaz
         GameObject gameOverSprite = new GameObject("gameOverSprite",new Sprite(graphics.newImage("Sprites/gameOver.png"),255),
-                (screenWidth/2)-(252/2) , screenHeight/5, 252, 208);
+                (GetGameWidth()/2)-(252/2) , GetGameHeight()/5, 252, 208);
         GameObject muteButton = new GameObject("muteButton",new Sprite(graphics.newImage("Sprites/buttons.png"),
                 new Rect(140*2, 0, 140, 140), 255),
-                (screenWidth/12)-(140/2) , screenHeight/8, 140, 140);
+                (GetGameWidth()/12)-(140/2) , GetGameHeight()/8, 140, 140);
         _helpButton = new GameObject("helpButton",new Sprite(graphics.newImage("Sprites/buttons.png"),
                 new Rect(0, 0, 140, 140), 255),
-                screenWidth-((screenWidth/12)+(140/2)) , screenHeight/8, 140, 140);
+                GetGameWidth()-((GetGameWidth()/12)+(140/2)) , GetGameHeight()/8, 140, 140);
         tapSprite = new GameObject("tapSprite",new Sprite(graphics.newImage("Sprites/playAgain.png"),255),
-                (screenWidth/2)-(532/2) , (screenHeight/3)*2, 532, 72);
+                (GetGameWidth()/2)-(532/2) , (GetGameHeight()/3)*2, 532, 72);
 
+        //Inicializacion de la puntuacion
         for(int i =0; i< 3; i++){
             int n =_points%10;
             _points = (_points-n)/10;
             if(n<8){
-            GameObject number = new GameObject("number",new Sprite(graphics.newImage("Sprites/scoreFont.png"),
+            GameObject number = new GameObject("number"+i,new Sprite(graphics.newImage("Sprites/scoreFont.png"),
                     new Rect(125*(n+7), 160*3, 125, 160), 255),
-                    ((screenWidth/2)+105)-(210*i)+(60*(i-1)) , screenHeight/3, 210, 140*2);
+                    ((GetGameWidth()/2)+105)-(210*i)+(60*(i-1)) , GetGameHeight()/3, 210, 140*2);
                 gameObjects.add(number);
             }
             else{
-                GameObject number = new GameObject("number",new Sprite(graphics.newImage("Sprites/scoreFont.png"),
+                GameObject number = new GameObject("number"+i,new Sprite(graphics.newImage("Sprites/scoreFont.png"),
                         new Rect(125*(n-8), 160*4, 125, 160), 255),
-                        ((screenWidth/2)+105)-(210*i)+(60*(i-1)) , screenHeight/3, 210, 140*2);
+                        ((GetGameWidth()/2)+105)-(210*i)+(60*(i-1)) , GetGameHeight()/3, 210, 140*2);
                 gameObjects.add(number);
             }
         }
+
+        //Objetos de la palabra POINTS
         GameObject p = new GameObject("p",new Sprite(graphics.newImage("Sprites/scoreFont.png"),
                 new Rect(125*0, 160*1, 125, 160), 255),
-                ((screenWidth/3)+(screenWidth/18)*0) , (screenHeight/3)+290, screenWidth/18, 210/2);
+                ((GetGameWidth()/3)+(GetGameWidth()/18)*0) , (GetGameHeight()/3)+290, GetGameWidth()/18, 210/2);
         GameObject o = new GameObject("o",new Sprite(graphics.newImage("Sprites/scoreFont.png"),
                 new Rect(125*14, 160*0, 125, 160), 255),
-                ((screenWidth/3)+(screenWidth/18)*1) , (screenHeight/3)+290, screenWidth/18, 210/2);
+                ((GetGameWidth()/3)+(GetGameWidth()/18)*1) , (GetGameHeight()/3)+290, GetGameWidth()/18, 210/2);
         GameObject i = new GameObject("i",new Sprite(graphics.newImage("Sprites/scoreFont.png"),
                 new Rect(125*8, 160*0, 125, 160), 255),
-                ((screenWidth/3)+(screenWidth/18)*2) , (screenHeight/3)+290, screenWidth/18, 210/2);
+                ((GetGameWidth()/3)+(GetGameWidth()/18)*2) , (GetGameHeight()/3)+290, GetGameWidth()/18, 210/2);
         GameObject n = new GameObject("n",new Sprite(graphics.newImage("Sprites/scoreFont.png"),
                 new Rect(125*13, 160*0, 125, 160), 255),
-                ((screenWidth/3)+(screenWidth/18)*3) , (screenHeight/3)+290, screenWidth/18, 210/2);
+                ((GetGameWidth()/3)+(GetGameWidth()/18)*3) , (GetGameHeight()/3)+290, GetGameWidth()/18, 210/2);
         GameObject t = new GameObject("t",new Sprite(graphics.newImage("Sprites/scoreFont.png"),
                 new Rect(125*4, 160*1, 125, 160), 255),
-                ((screenWidth/3)+(screenWidth/18)*4) , (screenHeight/3)+290, screenWidth/18, 210/2);
+                ((GetGameWidth()/3)+(GetGameWidth()/18)*4) , (GetGameHeight()/3)+290, GetGameWidth()/18, 210/2);
         GameObject s = new GameObject("s",new Sprite(graphics.newImage("Sprites/scoreFont.png"),
                 new Rect(125*3, 160*1, 125, 160), 255),
-                ((screenWidth/3)+(screenWidth/18)*5) , (screenHeight/3)+290, screenWidth/18, 210/2);
+                ((GetGameWidth()/3)+(GetGameWidth()/18)*5) , (GetGameHeight()/3)+290, GetGameWidth()/18, 210/2);
 
 
-
+        //Añadimos los objetos a la lista de GOs
         _tapAnimUp = false;
         gameObjects.add(_flechas1);
         gameObjects.add(_flechas2);
@@ -99,6 +103,7 @@ public class GameOverState implements GameState {
 
     }
 
+    //Update
     @Override
     public void update(double deltaTime) {
         _fUpdateTimer+=deltaTime;
@@ -106,6 +111,8 @@ public class GameOverState implements GameState {
         animateArrows(deltaTime);
         handleInput();
     }
+
+    ////Control de eventos
     public void handleInput(){
         List<Input.TouchEvent> events = _game.getInput().getTouchEvents();
         for (Input.TouchEvent event : events) {
@@ -116,6 +123,7 @@ public class GameOverState implements GameState {
         }
     }
 
+    //Animación del "Pulse la pantalla"
     public void animateTap(){
         _fUpdateTimer-=_fixedUpdateDelay;
         if(_tapAnimUp) {
@@ -127,16 +135,18 @@ public class GameOverState implements GameState {
             if(tapSprite.getSprite().getAlpha() <= 0) _tapAnimUp=true;
         }
     }
+
+    //Anmación de las flechas
     public void animateArrows(double deltaTime){
         double y =(150*deltaTime);
         _flechas1.setY(_flechas1.getY()+y);
         _flechas2.setY(_flechas2.getY()+y);
 
-        if(_flechas1.getY()>_game.getGameHeight())_flechas1.setY((_flechas2.getY()-_game.getGameHeight()*2)-1);
-        if(_flechas2.getY()>_game.getGameHeight())_flechas2.setY((_flechas1.getY()-_game.getGameHeight()*2)-1);
+        if(_flechas1.getY()>GetGameHeight())_flechas1.setY((_flechas2.getY()-GetGameHeight()*2)-2);
+        if(_flechas2.getY()>GetGameHeight())_flechas2.setY((_flechas1.getY()-GetGameHeight()*2)-2);
     }
 
-
+    //Render
     @Override
     public void render() {
 
@@ -148,11 +158,10 @@ public class GameOverState implements GameState {
 
     }
 
-    public int GetGameWidth(){ return _gameWidth;}
-    public int GetGameHeight(){ return _gameHeight;}
-    int _gameWidth = 1080;
-    int _gameHeight = 1920;
-    int ballVel = 450;
+    public int GetGameWidth(){return _game.getGameWidth();}
+    public int GetGameHeight(){return  _game.getGameHeight();}
+
+    //Globales de la escena
     int _points;
     double _fUpdateTimer=0;
     double _fixedUpdateDelay = 0.02;

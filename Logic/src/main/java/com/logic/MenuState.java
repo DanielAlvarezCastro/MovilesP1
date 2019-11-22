@@ -9,7 +9,6 @@ import com.engine.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import java.util.Random;
 
 public class MenuState implements GameState {
@@ -18,33 +17,37 @@ public class MenuState implements GameState {
         gameObjects = new ArrayList<>();
     }
 
+    //Inicializacion de los objetos de la scena
     @Override
     public void init() {
 
         Random r = new Random();
         _rndColor = r.nextInt((8 - 0) + 1);
         Graphics graphics = _game.getGraphics();
-        int screenWidth = _game.getGameWidth();
-        int screenHeight = _game.getGameHeight();
-        _backgroundOb = new GameObject("background",new Sprite(graphics.newImage("Sprites/backgrounds.png"),
-                new Rect(32*_rndColor,0,32,32)),screenWidth/6 , 0, (screenWidth/3)*2, screenHeight*2);
-        _flechas1 = new GameObject("arrows1",new Sprite(graphics.newImage("Sprites/arrowsBackground.png"),100),
-                screenWidth/6 , 0, (screenWidth/3)*2, screenHeight*2);
-        _flechas2 = new GameObject("arrows2",new Sprite(graphics.newImage("Sprites/arrowsBackground.png"),100),
-                screenWidth/6 , (-screenHeight*2)-1, (screenWidth/3)*2, screenHeight*2);
 
+
+        //Objetos del fondo
+        _backgroundOb = new GameObject("background",new Sprite(graphics.newImage("Sprites/backgrounds.png"),
+                new Rect(32*_rndColor,0,32,32)),GetGameWidth()/6 , 0, (GetGameWidth()/3)*2, GetGameHeight()*2);
+        _flechas1 = new GameObject("arrows1",new Sprite(graphics.newImage("Sprites/arrowsBackground.png"),100),
+                GetGameWidth()/6 , 0, (GetGameWidth()/3)*2, GetGameHeight()*2);
+        _flechas2 = new GameObject("arrows2",new Sprite(graphics.newImage("Sprites/arrowsBackground.png"),100),
+                GetGameWidth()/6 , (-GetGameHeight()*2)-2, (GetGameWidth()/3)*2, GetGameHeight()*2);
+
+        //Logo e interfaz
         GameObject logo = new GameObject("logo",new Sprite(graphics.newImage("Sprites/switchDashLogo.png"),255),
-                (screenWidth/2)-(508/2) , screenHeight/5, 508, 368);
+                (GetGameWidth()/2)-(508/2) , GetGameHeight()/5, 508, 368);
         GameObject muteButton = new GameObject("muteButton",new Sprite(graphics.newImage("Sprites/buttons.png"),
                 new Rect(140*2, 0, 140, 140), 255),
-                (screenWidth/12)-(140/2) , screenHeight/8, 140, 140);
+                (GetGameWidth()/12)-(140/2) , GetGameHeight()/8, 140, 140);
         _helpButton = new GameObject("helpButton",new Sprite(graphics.newImage("Sprites/buttons.png"),
                 new Rect(0, 0, 140, 140), 255),
-                screenWidth-((screenWidth/12)+(140/2)) , screenHeight/8, 140, 140);
+                GetGameWidth()-((GetGameWidth()/12)+(140/2)) , GetGameHeight()/8, 140, 140);
         tapSprite = new GameObject("tapSprite",new Sprite(graphics.newImage("Sprites/tapToPlay.png"),255),
-                (screenWidth/2)-(506/2) , screenHeight/2, 506, 72);
+                (GetGameWidth()/2)-(506/2) , GetGameHeight()/2, 506, 72);
         _tapAnimUp = false;
 
+        //Añadimos los objetos a la lista de GOs
         gameObjects.add(_backgroundOb);
         gameObjects.add(_flechas1);
         gameObjects.add(_flechas2);
@@ -55,6 +58,7 @@ public class MenuState implements GameState {
 
     }
 
+    //Update
     @Override
     public void update(double deltaTime) {
         _fUpdateTimer+=deltaTime;
@@ -63,6 +67,7 @@ public class MenuState implements GameState {
         handleInput();
     }
 
+    //Control de eventos
     public void handleInput(){
         List<Input.TouchEvent> events = _game.getInput().getTouchEvents();
         for (Input.TouchEvent event : events) {
@@ -74,6 +79,7 @@ public class MenuState implements GameState {
     }
 
 
+    //Animación del "Pulse la pantalla"
     public void animateTap(){
         _fUpdateTimer-=_fixedUpdateDelay;
         if(_tapAnimUp) {
@@ -85,16 +91,19 @@ public class MenuState implements GameState {
             if(tapSprite.getSprite().getAlpha() <= 0) _tapAnimUp=true;
         }
     }
+
+    //Anmación de las flechas
     public void animateArrows(double deltaTime){
         double y =(150*deltaTime);
         _flechas1.setY(_flechas1.getY()+y);
         _flechas2.setY(_flechas2.getY()+y);
 
-        if(_flechas1.getY()>_game.getGameHeight())_flechas1.setY((_flechas2.getY()-_game.getGameHeight()*2)-1);
-        if(_flechas2.getY()>_game.getGameHeight())_flechas2.setY((_flechas1.getY()-_game.getGameHeight()*2)-1);
+        if(_flechas1.getY()>GetGameHeight())_flechas1.setY((_flechas2.getY()-GetGameHeight()*2)-2);
+        if(_flechas2.getY()>GetGameHeight())_flechas2.setY((_flechas1.getY()-GetGameHeight()*2)-2);
     }
 
 
+    //Render
     @Override
     public void render() {
 
@@ -106,11 +115,10 @@ public class MenuState implements GameState {
 
     }
 
-    public int GetGameWidth(){ return _gameWidth;}
-    public int GetGameHeight(){ return _gameHeight;}
-    int _gameWidth = 1080;
-    int _gameHeight = 1920;
-    int ballVel = 450;
+    public int GetGameWidth(){return _game.getGameWidth();}
+    public int GetGameHeight(){return  _game.getGameHeight();}
+
+    //Globales de la escena
     double _fUpdateTimer=0;
     double _fixedUpdateDelay = 0.02;
     GameObject _flechas1;
