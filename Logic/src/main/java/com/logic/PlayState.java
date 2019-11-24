@@ -50,6 +50,8 @@ public class PlayState implements GameState {
                 GetGameWidth()/6 , 0, (GetGameWidth()/3)*2, GetGameHeight()*2);
         _flechas2 = new GameObject("arrows2",new Sprite(graphics.newImage("Sprites/arrowsBackground.png"),100),
                 GetGameWidth()/6 , (-GetGameHeight()*2)-2, (GetGameWidth()/3)*2, GetGameHeight()*2);
+        _flechas1.getSprite().setAlpha(50);
+        _flechas2.getSprite().setAlpha(50);
         gameObjects.add(_backgroundOb);
         gameObjects.add(_flechas1);
         gameObjects.add(_flechas2);
@@ -123,7 +125,7 @@ public class PlayState implements GameState {
             p.velocity = new int[2];
             p.velocity[0]=x;
             p.velocity[1]=y;
-            p.liveTime =0.3;
+            p.liveTime =0.5;
             p.gameObject.getSprite().setAlpha(255);
 
         }
@@ -134,9 +136,10 @@ public class PlayState implements GameState {
         for (Particle p : particles) {
             if(p.gameObject.getActive()){
                 p.gameObject.setX(p.gameObject.getX()+p.velocity[0]*deltatime);
+                p.velocity[1] += (int) (deltatime*4000);
                 p.gameObject.setY(p.gameObject.getY()+p.velocity[1]*deltatime);
                 p.liveTime-=deltatime;
-                p.gameObject.getSprite().setAlpha((int)(255*(p.liveTime/0.3)));
+                p.gameObject.getSprite().setAlpha((int)(255*(p.liveTime/0.5)));
                 if(p.liveTime<=0){
                     p.gameObject.setActive(false);
                 }

@@ -33,6 +33,8 @@ public class MenuState implements GameState {
                 GetGameWidth()/6 , 0, (GetGameWidth()/3)*2, GetGameHeight()*2);
         _flechas2 = new GameObject("arrows2",new Sprite(graphics.newImage("Sprites/arrowsBackground.png"),100),
                 GetGameWidth()/6 , (-GetGameHeight()*2)-2, (GetGameWidth()/3)*2, GetGameHeight()*2);
+        _flechas1.getSprite().setAlpha(50);
+        _flechas2.getSprite().setAlpha(50);
 
         //Logo e interfaz
         GameObject logo = new GameObject("logo",new Sprite(graphics.newImage("Sprites/switchDashLogo.png"),255),
